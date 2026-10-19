@@ -73,7 +73,7 @@ export function Film() {
       setCinematic(allowFilm);
 
       ctx = gsap.context(() => {
-        if (allowMotion && hero.current && heroMedia.current && heroCopy.current) {
+        if (allowMotion && hero.current && heroMedia.current && heroCopy.current && window.matchMedia("(min-width: 1024px)").matches) {
           gsap.fromTo(
             heroMedia.current,
             { yPercent: -4, scale: 1.08 },
@@ -146,18 +146,18 @@ export function Film() {
   return (
     <>
       <section id="top" ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
-        <div ref={heroMedia} className="absolute inset-x-0 -top-[8%] h-[120%]">
+        <div ref={heroMedia} className="hero-media absolute inset-x-0 -top-[8%] h-[120%]">
           <Image
-            src="/media/hero-laget.jpg"
-            alt="Fem spelare med ryggen mot oss, armarna om varandra, framför strålkastarna på en fullsatt arena."
+            src="/media/hero-arenan.jpg"
+            alt="Sex spelare med ryggen mot oss, armarna om varandra, framför strålkastarna på en fullsatt arena."
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[center_42%] lg:object-[center_58%]"
+            className="object-cover object-center lg:object-[center_58%]"
           />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
+        <div ref={heroCopy} className="hero-copy page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">Built2Perform</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             Tillsammans
@@ -167,7 +167,7 @@ export function Film() {
             föreningslivet<span className="text-cyan">.</span>
           </h1>
           <p className="rise rise-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
-            Vi skapar rabatthäftet. <span className="text-white">Slutkunden sparar massor med pengar,</span> och föreningen får 150 kronor för varje häfte.
+            Vi skapar rabatthäftet. <span className="text-white">Bidrar till att stärka lokala handeln,</span> Slutkunden sparar massor med pengar,<span className="text-white"> föreningen får 150 kronor för varje häfte.</span>
           </p>
           <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="#kedjan" className="bg-cyan px-5 py-3 text-center font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white sm:text-left">

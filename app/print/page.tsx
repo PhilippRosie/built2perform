@@ -24,7 +24,7 @@ export default function PrintPage() {
         lead="Föreningens namn, tryckt på kläder, skyltar, beachflags och rollups."
         marquee="Tryck · Kläder · Skylt · Beachflag · Rollup · Förening · Namn · Syns · "
         introKicker="Trycket"
-        introTitle={"Från tröjan\ntill planen."}
+        introTitle={"Från kläderna\ntill planen."}
         introBody="Det medlemmarna har på sig, och det som står där de samlas."
         chainLabel="Built2Print, från kläder till rollups"
         heroImage="/media/print-hero.jpg"

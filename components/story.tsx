@@ -149,12 +149,12 @@ export function Story({
 
   return (
     <>
-      <section ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
+      <section id="top" ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
         <div ref={heroMedia} className={`absolute ${heroFrame}`}>
           <Image src={heroImage} alt={heroAlt} fill priority sizes="100vw" className={`object-cover ${heroPosition}`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
+        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 lg:pb-16 lg:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">{kicker}</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             <KineticLines text={title} />

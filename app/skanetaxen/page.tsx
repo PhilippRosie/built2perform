@@ -76,8 +76,8 @@ const points = [
 export default function SkanetaxenPage() {
   return (
     <>
-      <section className="grid min-h-[100svh] bg-ink lg:h-[100svh] lg:grid-cols-2">
-        <div className="page-x relative z-10 order-2 flex flex-col justify-end pb-16 pt-12 sm:pt-16 lg:order-1 lg:justify-center lg:py-16 lg:pt-28">
+      <section id="top" className="grid min-h-[100svh] bg-ink lg:h-[100svh] lg:grid-cols-2">
+        <div className="page-x relative z-10 order-2 flex flex-col justify-end pb-28 pt-12 sm:pt-16 lg:order-1 lg:justify-center lg:py-16 lg:pb-16 lg:pt-28">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-[#e7dcc8]">Skånetaxen</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-full font-display font-semibold uppercase leading-[0.84] text-white sm:max-w-5xl">
             <KineticLines text={"Ett märke\nföreningen\nkan sälja."} />
@@ -163,19 +163,21 @@ export default function SkanetaxenPage() {
         </div>
       </section>
 
-      <div className="page-x pb-8 pt-16 sm:pt-20">
-        <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#e7dcc8]">Så bärs det</p>
-      </div>
-      <div className="grid grid-cols-1 gap-3 px-3 sm:gap-4 sm:px-4 md:grid-cols-2">
-        {worn.map((shot) => (
-          <figure key={shot.src} className={`relative bg-[#efe6da] ${shot.frame}`}>
-            <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-            <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
-              {shot.label}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      <section id="bars" className="scroll-mt-28">
+        <div className="page-x pb-8 pt-16 sm:pt-20">
+          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#e7dcc8]">Så bärs det</p>
+        </div>
+        <div className="grid grid-cols-1 gap-3 px-3 sm:gap-4 sm:px-4 md:grid-cols-2">
+          {worn.map((shot) => (
+            <figure key={shot.src} className={`relative bg-[#efe6da] ${shot.frame}`}>
+              <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+              <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
+                {shot.label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
 
       <section className="relative mt-3 aspect-[16/9] overflow-hidden bg-black sm:mt-4" aria-label="Skånetaxen vid sjön i kvällsljus">
         <Image
@@ -192,7 +194,7 @@ export default function SkanetaxenPage() {
         </p>
       </section>
 
-      <section className="bg-ink py-24 sm:py-32">
+      <section id="forjanst" className="scroll-mt-28 bg-ink py-24 sm:py-32">
         <div className="page-x">
           <Reveal stagger>
             <ol className="grid grid-cols-1 gap-px bg-[#e7dcc8]/15 sm:grid-cols-2 lg:grid-cols-3">

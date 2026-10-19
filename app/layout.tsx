@@ -4,6 +4,7 @@ import Script from "next/script";
 import { CookieBanner } from "@/components/cookie-banner";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
+import { Rail } from "@/components/rail";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <SmoothScroll>
           <Nav />
+          <Rail />
           <main id="innehall">{children}</main>
           <Footer />
           <CookieBanner />

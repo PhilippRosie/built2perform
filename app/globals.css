@@ -68,8 +68,28 @@ body::after {
   }
 }
 
+@media (max-width: 1279px) {
+  body:has(nav[aria-label="Avsnitt"]) {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+  }
+}
+
 .hero-title {
   font-size: clamp(2.15rem, 11vw, 6.6rem);
+}
+
+@media (max-width: 1023px) {
+  #top .hero-media {
+    top: 0;
+    height: auto;
+    aspect-ratio: 1024 / 576;
+  }
+
+  #top .hero-copy {
+    justify-content: flex-start;
+    padding-top: calc(56.25vw + 1.25rem);
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
 }
 
 @media (max-height: 760px) and (min-width: 1024px) {
@@ -392,5 +412,6 @@ input:-webkit-autofill {
     animation: none;
   }
 }
+
 
 
