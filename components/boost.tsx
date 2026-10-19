@@ -6,7 +6,7 @@ import { Savings } from "@/components/savings";
 const steps = [
   {
     n: "01",
-    title: "Vi sätter häftet",
+    title: "Vi bygger häftet",
     body: "Lokala aktörer, rabatter som går att använda, och föreningens namn på omslaget.",
   },
   {
@@ -56,7 +56,7 @@ export function Boost() {
         <div className="grid gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-6">
             <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Built2Boost</p>
-            <h2 className="mt-4 font-display text-[clamp(3.5rem,8vw,7rem)] font-semibold uppercase leading-[0.86] text-white">
+            <h2 className="mt-4 font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
               Häftet
               <span className="line-soft">som föreningen</span>
               säljer<span className="text-cyan">.</span>
@@ -64,7 +64,7 @@ export function Boost() {
           </Reveal>
           <Reveal delay={140} className="lg:col-span-5 lg:col-start-8">
             <p className="text-lg leading-8 text-mist">
-              Built2Boost är rabatthäftet. Vi fyller det med aktörer från orten.{" "}
+              Built2Boost är rabatthäftet. Vi bygger det utifrån föreningens önskemål och fyller det med aktörer från orten.{" "}
               <span className="text-white">Efter en till tre kuponger har slutkunden gått plus.</span> Föreningen får 150 kronor för varje häfte.
             </p>
           </Reveal>

@@ -50,7 +50,7 @@ export function Film() {
   useLayoutEffect(() => {
     const root = document.documentElement;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const wide = window.matchMedia("(min-width: 900px)");
+    const wide = window.matchMedia("(min-width: 1024px)");
     let ctx: gsap.Context | null = null;
 
     const setup = () => {
@@ -133,19 +133,19 @@ export function Film() {
 
   return (
     <>
-      <section id="top" ref={hero} className="relative h-[100svh] overflow-hidden bg-ink">
+      <section id="top" ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
         <div ref={heroMedia} className="absolute inset-x-0 -top-[8%] h-[120%]">
           <Image
-            src="/media/hero-lag.jpg"
-            alt="Ett lag med ryggen mot oss framför strålkastarna på arenan."
+            src="/media/hero-laget.jpg"
+            alt="Fem spelare med ryggen mot oss, armarna om varandra, framför strålkastarna på en fullsatt arena."
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[center_72%]"
+            className="object-cover object-[center_58%]"
           />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex h-full flex-col justify-end pb-8 pt-16 sm:pb-16 sm:pt-24">
+        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">Built2Perform</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             Tillsammans
@@ -155,13 +155,13 @@ export function Film() {
             föreningslivet<span className="text-cyan">.</span>
           </h1>
           <p className="rise rise-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
-            Vi börjar med rabatthäftet. <span className="text-white">Slutkunden går plus efter en till tre kuponger</span>, och föreningen får 150 kronor för varje häfte.
+            Vi skapar rabatthäftet. <span className="text-white">Slutkunden sparar massor med pengar,</span> och föreningen får 150 kronor för varje häfte.
           </p>
-          <div className="rise rise-4 mt-8 flex flex-wrap gap-3">
-            <a href="#kedjan" className="bg-cyan px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white">
+          <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href="#kedjan" className="bg-cyan px-5 py-3 text-center font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white sm:text-left">
               Följ kedjan
             </a>
-            <a href="#kalkyl-hafte" className="border border-white/30 px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-white transition hover:border-cyan hover:text-cyan">
+            <a href="#kalkyl-hafte" className="border border-white/30 px-5 py-3 text-center font-display text-xl uppercase tracking-[0.12em] text-white transition hover:border-cyan hover:text-cyan sm:text-left">
               Räkna på föreningen
             </a>
           </div>
@@ -173,7 +173,7 @@ export function Film() {
       <section className="page-x bg-ink py-24 sm:py-32">
         <Reveal>
           <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Kedjan</p>
-          <h2 className="mt-4 max-w-4xl font-display text-[clamp(3.4rem,8vw,7.4rem)] font-semibold uppercase leading-[0.86] text-white">
+          <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
             Så går
             <span className="line-soft">häftet</span>
             till<span className="text-cyan">.</span>
@@ -181,7 +181,8 @@ export function Film() {
         </Reveal>
         <Reveal delay={120}>
           <p className="mt-8 max-w-xl text-lg leading-8 text-mist">
-            Föreningen säljer det. Aktörerna på orten är med. <span className="text-white">Slutkunden går plus efter en till tre kuponger.</span>
+            Vi bygger häftet utifrån föreningens önskemål. Föreningen säljer det. Aktörerna på orten är med.{" "}
+            <span className="text-white">Slutkunden sparar massor med pengar.</span>
           </p>
         </Reveal>
       </section>
@@ -204,7 +205,7 @@ export function Film() {
                 <div className="page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
                   <p className="font-display text-5xl leading-none text-cyan">{panel.index}</p>
                   <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{panel.kicker}</p>
-                  <h3 className="mt-3 font-display text-5xl uppercase leading-[0.9] text-white sm:text-6xl">
+                  <h3 className="mt-3 font-display text-[clamp(2.6rem,8vw,3.75rem)] uppercase leading-[0.9] text-white">
                     <KineticLines text={panel.title} />
                   </h3>
                   <p className="mt-5 max-w-md text-base leading-7 text-mist">{panel.body}</p>
@@ -248,7 +249,7 @@ export function Film() {
         />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-ink to-transparent" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-        <p className="page-x absolute inset-x-0 bottom-10 font-display text-4xl uppercase leading-none text-white sm:text-6xl">
+        <p className="page-x absolute inset-x-0 bottom-10 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white">
           Tillsammans är vi <span className="text-cyan">starkare.</span>
         </p>
       </section>

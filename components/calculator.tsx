@@ -103,7 +103,7 @@ export function Calculator({
             ))}
           </div>
           <p className="mt-10 text-[0.72rem] uppercase tracking-[0.32em] text-mist">{resultLabel}</p>
-          <p className="mt-2 font-display text-6xl leading-none text-white sm:text-7xl" aria-live="polite">
+          <p className="mt-2 font-display text-[clamp(2.6rem,12vw,4.5rem)] leading-none text-white" aria-live="polite">
             {kronor(value * rate)}
           </p>
           <p className="mt-3 text-sm text-mist">
@@ -250,13 +250,13 @@ export function CombinedTotal() {
     <div className="border border-cyan/40 bg-cyan/10 p-6 sm:p-12">
       <Reveal>
         <p className="text-[0.72rem] uppercase tracking-[0.38em] text-cyan">Häftet och produkterna</p>
-        <p className="mt-4 max-w-3xl font-display text-5xl uppercase leading-[0.88] text-white sm:text-7xl">
+        <p className="mt-4 max-w-3xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
           Säljer ni båda
           <span className="line-soft">blir det</span>
           så här<span className="text-cyan">.</span>
         </p>
       </Reveal>
-      <p className="mt-8 font-display text-7xl leading-none text-cyan sm:text-8xl" aria-live="polite">
+      <p className="mt-8 font-display text-[clamp(3rem,14vw,6rem)] leading-none text-cyan" aria-live="polite">
         {kronor(total)}
       </p>
       <p className="mt-4 max-w-xl text-mist">

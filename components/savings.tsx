@@ -85,10 +85,10 @@ export function Savings() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => pick(count)}
-                className={`w-full px-4 py-6 text-left transition ${on ? "bg-cyan text-ink" : "bg-ink text-white/40 hover:text-white"}`}
+                className={`w-full px-3 py-5 text-left transition sm:px-4 sm:py-6 ${on ? "bg-cyan text-ink" : "bg-ink text-white/40 hover:text-white"}`}
               >
                 <span className="block font-display text-sm tracking-[0.18em]">{String(count).padStart(2, "0")}</span>
-                <span className="mt-2 block font-display text-2xl uppercase sm:text-3xl">{name}</span>
+                <span className="mt-2 block font-display text-xl uppercase leading-none sm:text-3xl">{name}</span>
               </button>
             </li>
           );

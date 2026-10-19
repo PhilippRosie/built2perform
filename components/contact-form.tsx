@@ -15,7 +15,23 @@ type ContactFormProps = {
   allowed?: Role[];
   subject?: string;
   hints?: Partial<Record<Role, string>>;
+  tone?: "cyan" | "sand";
 };
+
+const toneClass = {
+  cyan: {
+    text: "text-cyan",
+    button: "bg-cyan hover:bg-white",
+    focus: "focus:border-cyan",
+    selected: "border-cyan bg-cyan/10",
+  },
+  sand: {
+    text: "text-[#e7dcc8]",
+    button: "bg-[#e7dcc8] hover:bg-white",
+    focus: "focus:border-[#e7dcc8]",
+    selected: "border-[#e7dcc8] bg-[#e7dcc8]/10",
+  },
+} as const;
 
 type Fields = {
   name: string;
@@ -37,7 +53,8 @@ const empty: Fields = {
   message: "",
 };
 
-export function ContactForm({ allowed, subject = "Built2Perform", hints }: ContactFormProps = {}) {
+export function ContactForm({ allowed, subject = "Built2Perform", hints, tone = "cyan" }: ContactFormProps = {}) {
+  const paint = toneClass[tone];
   const choices = roles
     .filter((item) => (allowed ? allowed.includes(item.id) : true))
     .map((item) => ({ ...item, hint: hints?.[item.id] ?? item.hint }));
@@ -99,7 +116,7 @@ export function ContactForm({ allowed, subject = "Built2Perform", hints }: Conta
           {choices.map((item) => (
             <label
               key={item.id}
-              className={`cursor-pointer border p-4 transition ${role === item.id ? "border-cyan bg-cyan/10" : "border-white/15 hover:border-white/40"}`}
+              className={`cursor-pointer border p-4 transition ${role === item.id ? paint.selected : "border-white/15 hover:border-white/40"}`}
             >
               <input
                 type="radio"
@@ -121,17 +138,17 @@ export function ContactForm({ allowed, subject = "Built2Perform", hints }: Conta
       ) : null}
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Namn" value={fields.name} error={errors.name} onChange={(value) => set("name", value)} autoComplete="name" />
-        <Field label="E-post" value={fields.email} error={errors.email} onChange={(value) => set("email", value)} type="email" autoComplete="email" />
-        <Field label="Telefon" value={fields.phone} onChange={(value) => set("phone", value)} type="tel" autoComplete="tel" optional />
-        <Field label="Ort" value={fields.city} onChange={(value) => set("city", value)} autoComplete="address-level2" optional />
+        <Field label="Namn" value={fields.name} error={errors.name} onChange={(value) => set("name", value)} autoComplete="name" paint={paint} />
+        <Field label="E-post" value={fields.email} error={errors.email} onChange={(value) => set("email", value)} type="email" autoComplete="email" paint={paint} />
+        <Field label="Telefon" value={fields.phone} onChange={(value) => set("phone", value)} type="tel" autoComplete="tel" optional paint={paint} />
+        <Field label="Ort" value={fields.city} onChange={(value) => set("city", value)} autoComplete="address-level2" optional paint={paint} />
         {role !== "kund" ? (
-          <Field label={orgLabel} value={fields.organization} error={errors.organization} onChange={(value) => set("organization", value)} />
+          <Field label={orgLabel} value={fields.organization} error={errors.organization} onChange={(value) => set("organization", value)} paint={paint} />
         ) : (
-          <Field label="Förening" value={fields.organization} onChange={(value) => set("organization", value)} optional />
+          <Field label="Förening" value={fields.organization} onChange={(value) => set("organization", value)} optional paint={paint} />
         )}
         {role === "forening" ? (
-          <Field label="Ungefär antal medlemmar" value={fields.members} onChange={(value) => set("members", value)} inputMode="numeric" optional />
+          <Field label="Ungefär antal medlemmar" value={fields.members} onChange={(value) => set("members", value)} inputMode="numeric" optional paint={paint} />
         ) : null}
       </div>
 
@@ -142,13 +159,13 @@ export function ContactForm({ allowed, subject = "Built2Perform", hints }: Conta
           onChange={(event) => set("message", event.target.value)}
           rows={5}
           aria-invalid={errors.message ? true : undefined}
-          className="mt-2 w-full resize-y border-b border-white/20 bg-transparent py-3 text-white outline-none focus:border-cyan"
+          className={`mt-2 w-full resize-y border-b border-white/20 bg-transparent py-3 text-base text-white outline-none ${paint.focus}`}
         />
-        {errors.message ? <span className="mt-2 block text-sm text-cyan">{errors.message}</span> : null}
+        {errors.message ? <span className={`mt-2 block text-sm ${paint.text}`}>{errors.message}</span> : null}
       </label>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <button type="submit" className="bg-cyan px-6 py-3 font-display text-2xl uppercase tracking-[0.12em] text-ink transition hover:bg-white">
+        <button type="submit" className={`${paint.button} px-6 py-3 font-display text-2xl uppercase tracking-[0.12em] text-ink transition`}>
           Skriv till oss
         </button>
         <a href={`mailto:${site.email}`} className="text-sm text-mist underline decoration-white/20 underline-offset-4 hover:text-white">
@@ -173,6 +190,7 @@ function Field({
   autoComplete,
   inputMode,
   optional = false,
+  paint,
 }: {
   label: string;
   value: string;
@@ -182,6 +200,7 @@ function Field({
   autoComplete?: string;
   inputMode?: "numeric" | "text";
   optional?: boolean;
+  paint: (typeof toneClass)["cyan"];
 }) {
   const id = label.toLowerCase().replaceAll(" ", "-").replaceAll("ä", "a").replaceAll("ö", "o");
   return (
@@ -198,9 +217,9 @@ function Field({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         aria-invalid={error ? true : undefined}
-        className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-white outline-none focus:border-cyan"
+        className={`mt-2 w-full border-b border-white/20 bg-transparent py-3 text-base text-white outline-none ${paint.focus}`}
       />
-      {error ? <span className="mt-2 block text-sm text-cyan">{error}</span> : null}
+      {error ? <span className={`mt-2 block text-sm ${paint.text}`}>{error}</span> : null}
     </label>
   );
 }

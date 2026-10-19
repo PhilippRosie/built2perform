@@ -34,12 +34,19 @@ export const metadata: Metadata = {
     description: site.description,
     locale: "sv_SE",
     type: "website",
-    images: [{ url: "/media/mark-stadium.jpg", alt: "Built2Perform över en upplyst arena." }],
+    images: [{ url: "/thumbnail.png", width: 1024, height: 1024, alt: "Built2Perform" }],
+  },
+  twitter: {
+    card: "summary",
+    images: ["/thumbnail.png"],
   },
 };
 
 export const viewport: Viewport = {
   themeColor: "#05070c",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -47,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="sv" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="min-h-full bg-ink font-sans text-paper">
         <Script id="cinematic-flag" strategy="beforeInteractive">
-          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&matchMedia("(min-width: 900px)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
+          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&matchMedia("(min-width: 1024px)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
         </Script>
         <a className="skip" href="#innehall">
           Hoppa till innehållet

@@ -20,7 +20,7 @@ export function CookieBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-ink/95 px-5 py-3 backdrop-blur-md sm:px-8">
+    <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/15 bg-ink/95 px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-8">
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-6 text-mist">
           Vi sparar bara ditt val i webbläsaren. Inga reklam- eller analyscookies.{" "}

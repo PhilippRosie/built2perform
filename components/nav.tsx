@@ -26,7 +26,7 @@ const pageLinks: Record<string, NavLink[]> = {
   ],
   "/skanetaxen": [
     { href: "#inledning", id: "inledning", label: "Märket" },
-    { href: "#kedjan", id: "kedjan", label: "Kedjan" },
+    { href: "#kollektion", id: "kollektion", label: "Kollektionen" },
     { href: "#kontakt", id: "kontakt", label: "Kontakt" },
     { href: "/print", label: "Profilering" },
   ],
@@ -82,6 +82,7 @@ export function Nav() {
     const target = document.getElementById(id);
     if (!target) return;
     event.preventDefault();
+    lenis?.start();
     if (lenis) lenis.scrollTo(target, { offset: 0 });
     else target.scrollIntoView();
   }
@@ -99,7 +100,7 @@ export function Nav() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div className={`pointer-events-none absolute inset-0 ${solid || open ? "bg-ink/85 backdrop-blur-md" : ""}`} />
       <div ref={bar} className="relative z-50 h-px origin-left scale-x-0 bg-cyan" />
-      <div className="relative z-50 flex items-center justify-between px-5 py-4 sm:px-8 lg:px-12">
+      <div className="relative z-50 flex items-center justify-between px-5 py-4 pt-[max(1rem,env(safe-area-inset-top))] sm:px-8 lg:px-12">
         <Link href="/" onClick={home} aria-label="Built2Perform, till startsidan">
           <Logo compact alt="" />
         </Link>
@@ -140,7 +141,7 @@ export function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label="Meny"
-          className="fixed inset-0 z-40 flex flex-col justify-end bg-ink px-6 pb-16 pt-28 lg:hidden"
+          className="fixed inset-0 z-40 flex flex-col justify-end overflow-y-auto bg-ink px-6 pb-[max(4rem,env(safe-area-inset-bottom))] pt-28 lg:hidden"
         >
           <nav className="flex flex-col gap-3" aria-label="Sektioner">
             {links.map((link) => (
@@ -148,7 +149,7 @@ export function Nav() {
                 key={link.href}
                 href={link.href}
                 onClick={(event) => go(event, link.id)}
-                className="font-display text-5xl uppercase leading-[0.9] text-white sm:text-6xl"
+                className="font-display text-[clamp(2.4rem,12vw,3.75rem)] uppercase leading-[0.9] text-white"
               >
                 {link.label}
               </Link>
