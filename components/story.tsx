@@ -74,7 +74,7 @@ export function Story({
   useLayoutEffect(() => {
     const root = document.documentElement;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const wide = window.matchMedia("(min-width: 900px)");
+    const wide = window.matchMedia("(min-width: 1024px)");
     let ctx: gsap.Context | null = null;
 
     const setup = () => {
@@ -149,24 +149,24 @@ export function Story({
 
   return (
     <>
-      <section ref={hero} className="relative h-[100svh] overflow-hidden bg-ink">
+      <section ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
         <div ref={heroMedia} className={`absolute ${heroFrame}`}>
           <Image src={heroImage} alt={heroAlt} fill priority sizes="100vw" className={`object-cover ${heroPosition}`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex h-full flex-col justify-end pb-8 pt-16 sm:pb-16 sm:pt-24">
+        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">{kicker}</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             <KineticLines text={title} />
           </h1>
           <p className="rise rise-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">{lead}</p>
-          <div className="rise rise-4 mt-8 flex flex-wrap gap-3">
-            <a href="#kedjan" className="bg-cyan px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white">
+          <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href="#kedjan" className="bg-cyan px-5 py-3 text-center font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white sm:text-left">
               Följ kedjan
             </a>
             <Link
               href="#kontakt"
-              className="border border-white/30 px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-white transition hover:border-cyan hover:text-cyan"
+              className="border border-white/30 px-5 py-3 text-center font-display text-xl uppercase tracking-[0.12em] text-white transition hover:border-cyan hover:text-cyan sm:text-left"
             >
               Skriv till oss
             </Link>
@@ -179,7 +179,7 @@ export function Story({
       <section id="inledning" className="page-x scroll-mt-28 bg-ink py-24 sm:py-32">
         <Reveal>
           <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">{introKicker}</p>
-          <h2 className="mt-4 max-w-4xl font-display text-[clamp(3.4rem,8vw,7.4rem)] font-semibold uppercase leading-[0.86] text-white">
+          <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-[0.86] text-white">
             <KineticLines text={introTitle} />
           </h2>
         </Reveal>
@@ -201,7 +201,7 @@ export function Story({
                   <div className="page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
                     <p className="font-display text-5xl leading-none text-cyan">{scene.index}</p>
                     <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{scene.kicker}</p>
-                    <h3 className="mt-3 font-display text-5xl uppercase leading-[0.9] text-white sm:text-6xl">
+                    <h3 className="mt-3 font-display text-[clamp(2.6rem,8vw,3.75rem)] uppercase leading-[0.9] text-white">
                       <KineticLines text={scene.title} />
                     </h3>
                     <p className="mt-5 max-w-md text-base leading-7 text-mist">{scene.body}</p>
@@ -242,7 +242,7 @@ export function Story({
       <section className="relative h-[78svh] min-h-[520px] overflow-hidden bg-black">
         <Image src={closeImage} alt={closeAlt} fill sizes="100vw" className="object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/30" />
-        <p className="page-x absolute inset-x-0 bottom-10 font-display text-4xl uppercase leading-none text-white sm:text-6xl">
+        <p className="page-x absolute inset-x-0 bottom-10 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white">
           {closeLine.replace(/[.]$/, "")}
           <span className="text-cyan">.</span>
         </p>

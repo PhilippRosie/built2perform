@@ -79,7 +79,7 @@ export default function PrintPage() {
         <div className="page-x">
           <Reveal>
             <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">För föreningen</p>
-            <h2 className="mt-4 max-w-4xl font-display text-[clamp(3.2rem,7vw,6.4rem)] font-semibold uppercase leading-[0.86] text-white">
+            <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
               Fyra saker
               <span className="line-soft">med</span>
               ert namn<span className="text-cyan">.</span>

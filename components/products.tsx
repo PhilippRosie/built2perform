@@ -47,7 +47,7 @@ export function Products() {
       <div className="page-x relative py-24 sm:py-32">
         <Reveal>
           <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Sportartiklar</p>
-          <h2 className="mt-4 max-w-4xl font-display text-[clamp(3.5rem,8vw,7.2rem)] font-semibold uppercase leading-[0.86] text-white">
+          <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
             <span className="line-soft">Och så har vi</span>
             produkterna<span className="text-cyan">.</span>
           </h2>
@@ -92,7 +92,7 @@ export function Products() {
         <div>
           <Reveal>
             <p className="text-[0.72rem] uppercase tracking-[0.38em] text-cyan">Lagkassan</p>
-            <h3 className="mt-4 font-display text-5xl uppercase leading-[0.9] text-white">
+            <h3 className="mt-4 font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
               Pengar
               <span className="line-soft">till</span>
               laget<span className="text-cyan">.</span>

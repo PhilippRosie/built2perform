@@ -12,11 +12,13 @@
 html {
   background: #05070c;
   scroll-behavior: auto;
+  overflow-x: clip;
 }
 
 body {
   background: #05070c;
   color: #f4f7fb;
+  overflow-x: clip;
 }
 
 body::after {
@@ -67,7 +69,7 @@ body::after {
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6.6vw, 6.6rem);
+  font-size: clamp(2.15rem, 11vw, 6.6rem);
 }
 
 @media (max-height: 760px) {
@@ -109,12 +111,12 @@ body::after {
 
 .line-soft {
   display: block;
-  margin: 0.14em 0 0.08em;
-  font-size: 0.34em;
+  margin: 0.85em 0 0.7em;
+  font-size: 0.38em;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.04em;
   line-height: 1;
-  color: rgba(244, 247, 251, 0.78);
+  color: rgba(183, 194, 206, 0.9);
 }
 
 .marquee-track {
@@ -205,7 +207,7 @@ html.motion .stagger.is-in article:nth-child(4) {
   animation-delay: 0.24s;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   html.cinematic .chain-viewport {
     height: 100svh;
     overflow: hidden;
@@ -243,9 +245,9 @@ html.motion .stagger.is-in article:nth-child(4) {
 
 .range::-webkit-slider-thumb {
   appearance: none;
-  width: 1.15rem;
-  height: 1.15rem;
-  margin-top: -0.52rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: -0.62rem;
   border: 2px solid #05070c;
   background: #3ce4f4;
 }
@@ -256,8 +258,8 @@ html.motion .stagger.is-in article:nth-child(4) {
 }
 
 .range::-moz-range-thumb {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.35rem;
+  height: 1.35rem;
   border: 2px solid #05070c;
   border-radius: 0;
   background: #3ce4f4;
