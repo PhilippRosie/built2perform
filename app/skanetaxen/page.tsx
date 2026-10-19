@@ -79,7 +79,7 @@ export default function SkanetaxenPage() {
       <section className="grid min-h-[100svh] bg-ink lg:h-[100svh] lg:grid-cols-2">
         <div className="page-x relative z-10 order-2 flex flex-col justify-end pb-16 pt-12 sm:pt-16 lg:order-1 lg:justify-center lg:py-16 lg:pt-28">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-[#e7dcc8]">Skånetaxen</p>
-          <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
+          <h1 className="hero-title rise rise-2 mt-3 max-w-full font-display font-semibold uppercase leading-[0.84] text-white sm:max-w-5xl">
             <KineticLines text={"Ett märke\nföreningen\nkan sälja."} />
           </h1>
           <p className="rise rise-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
@@ -144,21 +144,18 @@ export default function SkanetaxenPage() {
         <div className="page-x pb-10 pt-4 sm:pb-14">
           <Reveal>
             <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#e7dcc8]">Kollektionen</p>
-            <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
+            <h2 className="mt-4 max-w-full font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-[0.92] text-white sm:max-w-4xl sm:leading-none">
               Stilen
               <span className="line-soft">du vill bära</span>
               märket alla pratar om<span className="text-[#e7dcc8]">.</span>
             </h2>
-            <p className="mt-8 max-w-xl text-lg leading-8 text-mist">
-               <span className="text-white"></span>
-            </p>
           </Reveal>
         </div>
-        <div className="grid gap-3 px-3 sm:gap-4 sm:px-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 px-3 sm:grid-cols-2 sm:gap-4 sm:px-4 lg:grid-cols-3">
           {beanies.map((beanie) => (
             <figure key={beanie.src} className="relative aspect-[4/5] bg-[#efe6da]">
               <Image src={beanie.src} alt={beanie.alt} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
-              <figcaption className="absolute bottom-4 left-4 bg-ink/80 px-3 py-2 text-[0.72rem] uppercase tracking-[0.28em] text-[#e7dcc8]">
+              <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
                 {beanie.label}
               </figcaption>
             </figure>
@@ -169,11 +166,11 @@ export default function SkanetaxenPage() {
       <div className="page-x pb-8 pt-16 sm:pt-20">
         <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#e7dcc8]">Så bärs det</p>
       </div>
-      <div className="grid gap-3 px-3 sm:gap-4 sm:px-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 px-3 sm:gap-4 sm:px-4 md:grid-cols-2">
         {worn.map((shot) => (
           <figure key={shot.src} className={`relative bg-[#efe6da] ${shot.frame}`}>
             <Image src={shot.src} alt={shot.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-            <figcaption className="absolute bottom-4 left-4 bg-ink/80 px-3 py-2 text-[0.72rem] uppercase tracking-[0.28em] text-[#e7dcc8]">
+            <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
               {shot.label}
             </figcaption>
           </figure>
@@ -189,7 +186,7 @@ export default function SkanetaxenPage() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/20" />
-        <p className="page-x absolute inset-x-0 bottom-6 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white sm:bottom-10">
+        <p className="page-x absolute inset-x-0 bottom-6 max-w-full font-display text-[clamp(1.7rem,7vw,3.75rem)] uppercase leading-[0.9] text-white sm:bottom-10 sm:leading-none">
           Premium, för föreningen
           <span className="text-[#e7dcc8]">.</span>
         </p>
@@ -198,7 +195,7 @@ export default function SkanetaxenPage() {
       <section className="bg-ink py-24 sm:py-32">
         <div className="page-x">
           <Reveal stagger>
-            <ol className="grid gap-px bg-[#e7dcc8]/15 sm:grid-cols-3">
+            <ol className="grid grid-cols-1 gap-px bg-[#e7dcc8]/15 sm:grid-cols-2 lg:grid-cols-3">
               {points.map((point) => (
                 <li key={point.n} className="bg-ink p-6 sm:p-8">
                   <span className="font-display text-4xl text-[#e7dcc8]">{point.n}</span>

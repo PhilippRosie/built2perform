@@ -72,7 +72,7 @@ body::after {
   font-size: clamp(2.15rem, 11vw, 6.6rem);
 }
 
-@media (max-height: 760px) {
+@media (max-height: 760px) and (min-width: 1024px) {
   .hero-title {
     font-size: clamp(2.35rem, 14svh, 5.2rem);
   }
