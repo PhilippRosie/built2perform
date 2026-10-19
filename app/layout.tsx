@@ -54,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="sv" className={`${display.variable} ${sans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full bg-ink font-sans text-paper">
         <Script id="cinematic-flag" strategy="beforeInteractive">
-          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&matchMedia("(min-width: 1024px)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
+          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
         </Script>
         <a className="skip" href="#innehall">
           Hoppa till innehållet

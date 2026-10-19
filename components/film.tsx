@@ -36,6 +36,18 @@ const panels = [
     contain: false,
     position: "object-[22%_center]",
   },
+  {
+    index: "03",
+    kicker: "Slutkunden",
+    title: "Plus.",
+    body: "Efter en till tre kuponger har häftet betalat sig. Varje gång det används efter det är pengar tillbaka.",
+    href: "#kund",
+    link: "Se när det vänder",
+    image: "/media/plus-cafe.jpg",
+    alt: "En gäst räcker över en kupong i ett café och håller ett Built2Boost-häfte. På disken står kaffe och bakverk.",
+    contain: false,
+    position: "object-[center_42%]",
+  },
 ];
 
 export function Film() {
@@ -50,14 +62,13 @@ export function Film() {
   useLayoutEffect(() => {
     const root = document.documentElement;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const wide = window.matchMedia("(min-width: 1024px)");
     let ctx: gsap.Context | null = null;
 
     const setup = () => {
       ctx?.revert();
       ctx = null;
       const allowMotion = !motion.matches;
-      const allowFilm = allowMotion && wide.matches;
+      const allowFilm = allowMotion;
       root.classList.toggle("cinematic", allowFilm);
       setCinematic(allowFilm);
 
@@ -118,13 +129,14 @@ export function Film() {
 
     setup();
     const onLoad = () => ScrollTrigger.refresh();
+    const onResize = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad);
-    wide.addEventListener("change", setup);
+    window.addEventListener("resize", onResize);
     motion.addEventListener("change", setup);
 
     return () => {
       window.removeEventListener("load", onLoad);
-      wide.removeEventListener("change", setup);
+      window.removeEventListener("resize", onResize);
       motion.removeEventListener("change", setup);
       ctx?.revert();
       root.classList.remove("cinematic");
@@ -141,7 +153,7 @@ export function Film() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[center_58%]"
+            className="object-cover object-[center_42%] lg:object-[center_58%]"
           />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
@@ -192,17 +204,17 @@ export function Film() {
           <div ref={track} className="chain-track flex flex-col">
             {panels.map((panel) => (
               <article key={panel.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col bg-ink lg:min-h-[92svh] lg:flex-row">
-                <div className="relative min-h-[46vh] flex-1 bg-black lg:min-h-0">
+                <div className="chain-media relative min-h-[46vh] flex-1 bg-black lg:min-h-0">
                   <Image
                     src={panel.image}
                     alt={panel.alt}
                     fill
                     sizes="(min-width: 1024px) 54vw, 100vw"
-                    className={`${panel.contain ? "object-contain" : "object-cover"} ${"position" in panel && panel.position ? panel.position : ""}`}
+                    className={`object-cover object-center ${"position" in panel && panel.position ? panel.position : ""}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/20 lg:bg-gradient-to-r lg:from-transparent lg:via-ink/10 lg:to-ink" />
                 </div>
-                <div className="page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
+                <div className="chain-copy page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
                   <p className="font-display text-5xl leading-none text-cyan">{panel.index}</p>
                   <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{panel.kicker}</p>
                   <h3 className="mt-3 font-display text-[clamp(2.6rem,8vw,3.75rem)] uppercase leading-[0.9] text-white">
@@ -215,21 +227,6 @@ export function Film() {
                 </div>
               </article>
             ))}
-            <article className="chain-panel relative flex min-h-[100svh] w-full flex-col justify-center bg-ink">
-              <div className="page-x">
-                <p className="font-display text-5xl leading-none text-cyan">03</p>
-                <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">Slutkunden</p>
-                <h3 className="mt-4 font-display text-[clamp(5rem,14vw,12rem)] font-semibold uppercase leading-[0.8] text-white">
-                  Plus<span className="text-cyan">.</span>
-                </h3>
-                <p className="mt-6 max-w-lg text-base leading-7 text-mist">
-                  Efter en till tre kuponger har häftet betalat sig. Varje gång det används efter det är pengar tillbaka.
-                </p>
-                <a href="#kund" className="mt-8 inline-flex font-display text-2xl uppercase tracking-[0.12em] text-cyan">
-                  Se när det vänder
-                </a>
-              </div>
-            </article>
           </div>
         </div>
         {cinematic ? (
@@ -239,17 +236,17 @@ export function Film() {
         ) : null}
       </section>
 
-      <section className="relative h-[78svh] min-h-[520px] overflow-hidden bg-black" aria-label="Built2Boost, laget framför arenan">
+      <section className="relative aspect-[1024/533] max-h-[78svh] w-full overflow-hidden bg-black" aria-label="Built2Boost, laget framför arenan">
         <Image
           src="/media/laget.jpg"
           alt="Ett lag med ryggen mot oss, i motljus på planen."
           fill
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-[center_68%]"
         />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-ink to-transparent" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-        <p className="page-x absolute inset-x-0 bottom-10 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white">
+        <p className="page-x absolute inset-x-0 bottom-3 text-center font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white sm:bottom-4 sm:text-left">
           Tillsammans är vi <span className="text-cyan">starkare.</span>
         </p>
       </section>
