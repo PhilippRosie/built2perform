@@ -1,0 +1,257 @@
+"use client";
+
+import Image from "next/image";
+import { useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { KineticLines } from "@/components/kinetic";
+import { Reveal } from "@/components/reveal";
+import { Ticker } from "@/components/ticker";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const SCENE_COUNT = 3;
+
+const panels = [
+  {
+    index: "01",
+    kicker: "Built2Boost",
+    title: "Rabatthäftet.",
+    body: "Vi fyller det med atraktiva lokala aktörer, föreningen säljer sitt eget rabatthäftet och slutkunden tjänar pengar på att använda det. Föreningen får 150 kronor för varje sålt häfte.",
+    href: "#hafte",
+    link: "Öppna häftet",
+    image: "/media/boost-booklet.jpg",
+    alt: "Ett Built2Boost-häfte hålls upp framför en väska och en flaska med samma märke.",
+    contain: false,
+  },
+  {
+    index: "02",
+    kicker: "Aktörerna",
+    title: "Från orten.",
+    body: "Caféet, butiken, frisören, restaurangen. När häftet används stannar handeln runt föreningen, och slutkunden betalar mindre på ställen de redan går till.",
+    href: "#aktorer",
+    link: "Vilka som är med",
+    image: "/media/orten.jpg",
+    alt: "En kvällsgata med café, restaurang, frisör och butik.",
+    contain: false,
+    position: "object-[22%_center]",
+  },
+];
+
+export function Film() {
+  const hero = useRef<HTMLElement>(null);
+  const heroMedia = useRef<HTMLDivElement>(null);
+  const heroCopy = useRef<HTMLDivElement>(null);
+  const chain = useRef<HTMLElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const [cinematic, setCinematic] = useState(false);
+
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const wide = window.matchMedia("(min-width: 900px)");
+    let ctx: gsap.Context | null = null;
+
+    const setup = () => {
+      ctx?.revert();
+      ctx = null;
+      const allowMotion = !motion.matches;
+      const allowFilm = allowMotion && wide.matches;
+      root.classList.toggle("cinematic", allowFilm);
+      setCinematic(allowFilm);
+
+      ctx = gsap.context(() => {
+        if (allowMotion && hero.current && heroMedia.current && heroCopy.current) {
+          gsap.fromTo(
+            heroMedia.current,
+            { yPercent: -4, scale: 1.08 },
+            {
+              yPercent: 12,
+              scale: 1.16,
+              ease: "none",
+              scrollTrigger: {
+                trigger: hero.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            },
+          );
+          gsap.to(heroCopy.current, {
+            y: -48,
+            opacity: 0.2,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero.current,
+              start: "center top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
+
+        if (allowFilm && chain.current && track.current) {
+          const currentTrack = track.current;
+          gsap.to(currentTrack, {
+            x: () => -(currentTrack.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+              trigger: chain.current,
+              start: "top top",
+              end: () => `+=${Math.max(0, currentTrack.scrollWidth - window.innerWidth)}`,
+              pin: true,
+              scrub: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const next = Math.min(SCENE_COUNT - 1, Math.round(self.progress * (SCENE_COUNT - 1)));
+                setIndex((current) => (current === next ? current : next));
+              },
+            },
+          });
+        }
+      });
+
+      ScrollTrigger.refresh();
+    };
+
+    setup();
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    wide.addEventListener("change", setup);
+    motion.addEventListener("change", setup);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      wide.removeEventListener("change", setup);
+      motion.removeEventListener("change", setup);
+      ctx?.revert();
+      root.classList.remove("cinematic");
+    };
+  }, []);
+
+  return (
+    <>
+      <section id="top" ref={hero} className="relative h-[100svh] overflow-hidden bg-ink">
+        <div ref={heroMedia} className="absolute inset-x-0 -top-[8%] h-[120%]">
+          <Image
+            src="/media/hero-lag.jpg"
+            alt="Ett lag med ryggen mot oss framför strålkastarna på arenan."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_72%]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
+        </div>
+        <div ref={heroCopy} className="page-x relative z-10 flex h-full flex-col justify-end pb-8 pt-16 sm:pb-16 sm:pt-24">
+          <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">Built2Perform</p>
+          <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
+            Tillsammans
+            <br />
+            <span className="ink-line">stärker vi</span>
+            <br />
+            föreningslivet<span className="text-cyan">.</span>
+          </h1>
+          <p className="rise rise-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
+            Vi börjar med rabatthäftet. <span className="text-white">Slutkunden går plus efter en till tre kuponger</span>, och föreningen får 150 kronor för varje häfte.
+          </p>
+          <div className="rise rise-4 mt-8 flex flex-wrap gap-3">
+            <a href="#kedjan" className="bg-cyan px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-ink transition hover:bg-white">
+              Följ kedjan
+            </a>
+            <a href="#kalkyl-hafte" className="border border-white/30 px-5 py-3 font-display text-xl uppercase tracking-[0.12em] text-white transition hover:border-cyan hover:text-cyan">
+              Räkna på föreningen
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Ticker text="Häfte · Kupong · Plus · Förening · Lokalt · Aktör · Grepp · Skydd" />
+
+      <section className="page-x bg-ink py-24 sm:py-32">
+        <Reveal>
+          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Kedjan</p>
+          <h2 className="mt-4 max-w-4xl font-display text-[clamp(3.4rem,8vw,7.4rem)] font-semibold uppercase leading-[0.86] text-white">
+            Så går
+            <span className="line-soft">häftet</span>
+            till<span className="text-cyan">.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="mt-8 max-w-xl text-lg leading-8 text-mist">
+            Föreningen säljer det. Aktörerna på orten är med. <span className="text-white">Slutkunden går plus efter en till tre kuponger.</span>
+          </p>
+        </Reveal>
+      </section>
+
+      <section id="kedjan" ref={chain} className="chain relative bg-ink" aria-label="Häftet, från föreningen till slutkunden">
+        <div className="chain-viewport">
+          <div ref={track} className="chain-track flex flex-col">
+            {panels.map((panel) => (
+              <article key={panel.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col bg-ink lg:min-h-[92svh] lg:flex-row">
+                <div className="relative min-h-[46vh] flex-1 bg-black lg:min-h-0">
+                  <Image
+                    src={panel.image}
+                    alt={panel.alt}
+                    fill
+                    sizes="(min-width: 1024px) 54vw, 100vw"
+                    className={`${panel.contain ? "object-contain" : "object-cover"} ${"position" in panel && panel.position ? panel.position : ""}`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/20 lg:bg-gradient-to-r lg:from-transparent lg:via-ink/10 lg:to-ink" />
+                </div>
+                <div className="page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
+                  <p className="font-display text-5xl leading-none text-cyan">{panel.index}</p>
+                  <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{panel.kicker}</p>
+                  <h3 className="mt-3 font-display text-5xl uppercase leading-[0.9] text-white sm:text-6xl">
+                    <KineticLines text={panel.title} />
+                  </h3>
+                  <p className="mt-5 max-w-md text-base leading-7 text-mist">{panel.body}</p>
+                  <a href={panel.href} className="mt-8 inline-flex font-display text-2xl uppercase tracking-[0.12em] text-cyan">
+                    {panel.link}
+                  </a>
+                </div>
+              </article>
+            ))}
+            <article className="chain-panel relative flex min-h-[100svh] w-full flex-col justify-center bg-ink">
+              <div className="page-x">
+                <p className="font-display text-5xl leading-none text-cyan">03</p>
+                <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">Slutkunden</p>
+                <h3 className="mt-4 font-display text-[clamp(5rem,14vw,12rem)] font-semibold uppercase leading-[0.8] text-white">
+                  Plus<span className="text-cyan">.</span>
+                </h3>
+                <p className="mt-6 max-w-lg text-base leading-7 text-mist">
+                  Efter en till tre kuponger har häftet betalat sig. Varje gång det används efter det är pengar tillbaka.
+                </p>
+                <a href="#kund" className="mt-8 inline-flex font-display text-2xl uppercase tracking-[0.12em] text-cyan">
+                  Se när det vänder
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+        {cinematic ? (
+          <p className="scene-count pointer-events-none absolute bottom-6 right-8 z-20 hidden font-display text-2xl tracking-[0.18em] text-white/80">
+            {String(index + 1).padStart(2, "0")} / 03
+          </p>
+        ) : null}
+      </section>
+
+      <section className="relative h-[78svh] min-h-[520px] overflow-hidden bg-black" aria-label="Built2Boost, laget framför arenan">
+        <Image
+          src="/media/laget.jpg"
+          alt="Ett lag med ryggen mot oss, i motljus på planen."
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-ink to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
+        <p className="page-x absolute inset-x-0 bottom-10 font-display text-4xl uppercase leading-none text-white sm:text-6xl">
+          Tillsammans är vi <span className="text-cyan">starkare.</span>
+        </p>
+      </section>
+    </>
+  );
+}
