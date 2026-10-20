@@ -12,19 +12,42 @@ export const metadata: Metadata = {
 
 const beanies = [
   {
-    src: "/media/skanetaxen-mossa-svart.jpg",
+    src: "/media/skanetaxen-mossa-ljus.jpg",
+    alt: "Gräddvit stickad mössa med en svart skinnlapp där Skånetaxen-taxen är präglad.",
+    label: "Vit mössa",
+  },
+  {
+    src: "/media/skanetaxen-mossa-ljus-tofs.jpg",
+    alt: "Gräddvit mössa med tofs och en svart skinnlapp där Skånetaxen-taxen är präglad.",
+    label: "Vit mössa med tofs",
+  },
+  {
+    src: "/media/skanetaxen-mossa-svart-ny.jpg",
     alt: "Svart stickad mössa med en mörk skinnlapp där Skånetaxen-taxen är präglad.",
     label: "Svart mössa",
   },
   {
-    src: "/media/skanetaxen-mossa-tofs.jpg",
-    alt: "Gräddvit mössa med tofs och en ljus lapp med Skånetaxen-märket.",
-    label: "Mössa med tofs",
+    src: "/media/skanetaxen-mossa-svart-tofs.jpg",
+    alt: "Svart mössa med tofs och en mörk skinnlapp där Skånetaxen-taxen är präglad.",
+    label: "Svart mössa med tofs",
+  },
+];
+
+const garments = [
+  {
+    src: "/media/skanetaxen-jacka-fram.jpg",
+    alt: "Gräddvit jacka framifrån, med dragkedja och Skånetaxen broderat på ärmen.",
+    label: "Jacka",
   },
   {
-    src: "/media/skanetaxen-mossa.jpg",
-    alt: "Gräddvit stickad mössa med Skånetaxen-märket på en ton-i-ton-lapp.",
-    label: "Mössa",
+    src: "/media/skanetaxen-jacka-rygg.jpg",
+    alt: "Gräddvit jacka bakifrån, med Skånetaxen-taxen broderad över ryggen.",
+    label: "Jacka, rygg",
+  },
+  {
+    src: "/media/skanetaxen-hoodie-fram.jpg",
+    alt: "Beige hoodie med en liten vit Skånetaxen-tax på huvan och märket broderat på ärmen.",
+    label: "Hoodie",
   },
 ];
 
@@ -36,20 +59,20 @@ const worn = [
     frame: "aspect-[4/5]",
   },
   {
-    src: "/media/skanetaxen-skog.jpg",
+    src: "/media/skanetaxen-skogen-2.jpg",
     alt: "Två personer i höstskog. Hon i gräddvit teddyjacka och mössa med tofs, han i svart mössa, beige hoodie och mörk väst.",
     label: "I skogen",
     frame: "aspect-[4/5]",
   },
   {
-    src: "/media/skanetaxen-bordet.jpg",
-    alt: "En person i beige hoodie och mössa med tofs sitter vid ett träbord vid sjön. En likadan mössa ligger bredvid.",
+    src: "/media/skanetaxen-bordet-2.jpg",
+    alt: "En person i beige hoodie och mössa med tofs sitter vid ett träbord vid sjön, med en kopp i handen.",
     label: "Vid bordet",
     frame: "aspect-[3/2]",
   },
   {
-    src: "/media/skanetaxen-arm.jpg",
-    alt: "Närbild på en beige hoodie med Skånetaxen broderat på ärmen, och en gräddvit mössa med märket på ett träbord.",
+    src: "/media/skanetaxen-armen.jpg",
+    alt: "Närbild på en beige hoodie med Skånetaxen broderat på ärmen, och en gräddvit mössa med svart skinnlapp på ett träbord.",
     label: "På ärmen",
     frame: "aspect-[3/2]",
   },
@@ -151,12 +174,22 @@ export default function SkanetaxenPage() {
             </h2>
           </Reveal>
         </div>
-        <div className="grid grid-cols-1 gap-3 px-3 sm:grid-cols-2 sm:gap-4 sm:px-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 px-3 sm:grid-cols-2 sm:gap-4 sm:px-4 lg:grid-cols-4">
           {beanies.map((beanie) => (
             <figure key={beanie.src} className="relative aspect-[4/5] bg-[#efe6da]">
-              <Image src={beanie.src} alt={beanie.alt} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
+              <Image src={beanie.src} alt={beanie.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
               <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
                 {beanie.label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className="mt-3 grid grid-cols-1 gap-3 px-3 sm:mt-4 sm:grid-cols-3 sm:gap-4 sm:px-4">
+          {garments.map((item) => (
+            <figure key={item.src} className="relative aspect-[4/5] bg-[#efe6da]">
+              <Image src={item.src} alt={item.alt} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover object-center" />
+              <figcaption className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] bg-ink/80 px-3 py-2 text-[0.65rem] uppercase leading-tight tracking-[0.18em] text-[#e7dcc8] sm:text-[0.72rem] sm:tracking-[0.28em]">
+                {item.label}
               </figcaption>
             </figure>
           ))}
@@ -181,7 +214,7 @@ export default function SkanetaxenPage() {
 
       <section className="relative mt-3 aspect-[16/9] overflow-hidden bg-black sm:mt-4" aria-label="Skånetaxen vid sjön i kvällsljus">
         <Image
-          src="/media/skanetaxen-sjon.jpg"
+          src="/media/skanetaxen-sjon-2.jpg"
           alt="Två personer vid en sjö i kvällsljus. Hon har beige hoodie och mössa med tofs, han en gräddvit jacka med Skånetaxen broderat på ryggen."
           fill
           sizes="100vw"
