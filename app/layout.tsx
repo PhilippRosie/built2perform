@@ -4,6 +4,7 @@ import Script from "next/script";
 import { CookieBanner } from "@/components/cookie-banner";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
+import { Rail } from "@/components/rail";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -51,16 +52,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="sv" className={`${display.variable} ${sans.variable} h-full antialiased`}>
+    <html lang="sv" className={`${display.variable} ${sans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full bg-ink font-sans text-paper">
         <Script id="cinematic-flag" strategy="beforeInteractive">
-          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&matchMedia("(min-width: 1024px)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
+          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
         </Script>
         <a className="skip" href="#innehall">
           Hoppa till innehållet
         </a>
         <SmoothScroll>
           <Nav />
+          <Rail />
           <main id="innehall">{children}</main>
           <Footer />
           <CookieBanner />

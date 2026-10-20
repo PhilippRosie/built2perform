@@ -200,7 +200,7 @@ function Field({
   autoComplete?: string;
   inputMode?: "numeric" | "text";
   optional?: boolean;
-  paint: (typeof toneClass)["cyan"];
+  paint: (typeof toneClass)[keyof typeof toneClass];
 }) {
   const id = label.toLowerCase().replaceAll(" ", "-").replaceAll("ä", "a").replaceAll("ö", "o");
   return (

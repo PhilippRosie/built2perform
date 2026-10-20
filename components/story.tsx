@@ -74,14 +74,13 @@ export function Story({
   useLayoutEffect(() => {
     const root = document.documentElement;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const wide = window.matchMedia("(min-width: 1024px)");
     let ctx: gsap.Context | null = null;
 
     const setup = () => {
       ctx?.revert();
       ctx = null;
       const allowMotion = !motion.matches;
-      const allowFilm = allowMotion && wide.matches;
+      const allowFilm = allowMotion;
       root.classList.toggle("cinematic", allowFilm);
       setCinematic(allowFilm);
 
@@ -132,13 +131,14 @@ export function Story({
 
     setup();
     const onLoad = () => ScrollTrigger.refresh();
+    const onResize = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad);
-    wide.addEventListener("change", setup);
+    window.addEventListener("resize", onResize);
     motion.addEventListener("change", setup);
 
     return () => {
       window.removeEventListener("load", onLoad);
-      wide.removeEventListener("change", setup);
+      window.removeEventListener("resize", onResize);
       motion.removeEventListener("change", setup);
       ctx?.revert();
       root.classList.remove("cinematic");
@@ -149,12 +149,12 @@ export function Story({
 
   return (
     <>
-      <section ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
+      <section id="top" ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
         <div ref={heroMedia} className={`absolute ${heroFrame}`}>
           <Image src={heroImage} alt={heroAlt} fill priority sizes="100vw" className={`object-cover ${heroPosition}`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 sm:pb-16 sm:pt-24">
+        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 lg:pb-16 lg:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">{kicker}</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             <KineticLines text={title} />
@@ -194,11 +194,11 @@ export function Story({
             {scenes.map((scene) =>
               scene.image ? (
                 <article key={scene.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col bg-ink lg:min-h-[92svh] lg:flex-row">
-                  <div className="relative min-h-[46vh] flex-1 bg-black lg:min-h-0">
-                    <Image src={scene.image} alt={scene.alt ?? ""} fill sizes="(min-width: 1024px) 54vw, 100vw" className={`object-cover ${scene.position ?? ""}`} />
+                  <div className="chain-media relative min-h-[46vh] flex-1 bg-black lg:min-h-0">
+                    <Image src={scene.image} alt={scene.alt ?? ""} fill sizes="(min-width: 1024px) 54vw, 100vw" className={`object-cover ${scene.position ?? "object-center"}`} />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/20 lg:bg-gradient-to-r lg:from-transparent lg:via-ink/10 lg:to-ink" />
                   </div>
-                  <div className="page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
+                  <div className="chain-copy page-x relative z-10 flex w-full flex-col justify-end py-12 lg:w-[46%] lg:justify-center lg:px-12 lg:py-16">
                     <p className="font-display text-5xl leading-none text-cyan">{scene.index}</p>
                     <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{scene.kicker}</p>
                     <h3 className="mt-3 font-display text-[clamp(2.6rem,8vw,3.75rem)] uppercase leading-[0.9] text-white">
@@ -213,14 +213,14 @@ export function Story({
                   </div>
                 </article>
               ) : (
-                <article key={scene.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col justify-center bg-ink">
-                  <div className="page-x">
+                <article key={scene.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col bg-ink lg:min-h-[92svh]">
+                  <div className="chain-copy page-x relative z-10 flex w-full flex-col justify-end py-12 lg:justify-center lg:px-16 lg:py-16">
                     <p className="font-display text-5xl leading-none text-cyan">{scene.index}</p>
                     <p className="mt-4 text-[0.72rem] uppercase tracking-[0.36em] text-white/60">{scene.kicker}</p>
-                    <h3 className="mt-4 font-display text-[clamp(4.2rem,12vw,9rem)] font-semibold uppercase leading-[0.82] text-white">
+                    <h3 className="mt-3 font-display text-[clamp(2.6rem,8vw,3.75rem)] uppercase leading-[0.9] text-white lg:mt-4 lg:text-[clamp(4.2rem,12vw,9rem)] lg:leading-[0.82]">
                       <KineticLines text={scene.title} />
                     </h3>
-                    <p className="mt-6 max-w-lg text-base leading-7 text-mist">{scene.body}</p>
+                    <p className="mt-5 max-w-md text-base leading-7 text-mist lg:mt-6 lg:max-w-lg">{scene.body}</p>
                     {scene.href && scene.link ? (
                       <Link href={scene.href} className="mt-8 inline-flex font-display text-2xl uppercase tracking-[0.12em] text-cyan">
                         {scene.link}
@@ -233,13 +233,13 @@ export function Story({
           </div>
         </div>
         {cinematic ? (
-          <p className="scene-count pointer-events-none absolute bottom-6 right-8 z-20 hidden font-display text-2xl tracking-[0.18em] text-white/80">
+          <p className="scene-count pointer-events-none absolute right-8 z-20 font-display text-2xl tracking-[0.18em] text-white/80">
             {String(index + 1).padStart(2, "0")} / {total}
           </p>
         ) : null}
       </section>
 
-      <section className="relative h-[78svh] min-h-[520px] overflow-hidden bg-black">
+      <section className="relative h-[78svh] overflow-hidden bg-black">
         <Image src={closeImage} alt={closeAlt} fill sizes="100vw" className="object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/30" />
         <p className="page-x absolute inset-x-0 bottom-10 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white">

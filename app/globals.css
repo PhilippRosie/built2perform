@@ -68,11 +68,31 @@ body::after {
   }
 }
 
+@media (max-width: 1279px) {
+  body:has(nav[aria-label="Avsnitt"]) {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+  }
+}
+
 .hero-title {
   font-size: clamp(2.15rem, 11vw, 6.6rem);
 }
 
-@media (max-height: 760px) {
+@media (max-width: 1023px) {
+  #top .hero-media {
+    top: 0;
+    height: auto;
+    aspect-ratio: 1024 / 576;
+  }
+
+  #top .hero-copy {
+    justify-content: flex-start;
+    padding-top: calc(56.25vw + 1.25rem);
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-height: 760px) and (min-width: 1024px) {
   .hero-title {
     font-size: clamp(2.35rem, 14svh, 5.2rem);
   }
@@ -207,26 +227,70 @@ html.motion .stagger.is-in article:nth-child(4) {
   animation-delay: 0.24s;
 }
 
-@media (min-width: 1024px) {
-  html.cinematic .chain-viewport {
-    height: 100svh;
+html.cinematic .chain-viewport {
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+html.cinematic .chain-track.flex-col {
+  height: 100%;
+  width: max-content;
+  flex-direction: row;
+}
+
+html.cinematic .chain-panel {
+  height: 100svh;
+  height: 100dvh;
+  width: 100vw;
+  min-height: 0;
+}
+
+html.cinematic .scene-count {
+  display: block;
+  bottom: 1.5rem;
+}
+
+/* Mobile chain slides: inset photo, number and title over the lower edge. */
+@media (max-width: 1023px) {
+  .chain-panel:has(.chain-media) {
+    justify-content: flex-end;
+    padding-top: max(6.5rem, calc(env(safe-area-inset-top) + 5.5rem));
+  }
+
+  .chain-media {
+    flex: 0 0 auto;
+    align-self: stretch;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 4 / 3;
+    margin-inline: 1.25rem;
     overflow: hidden;
   }
 
-  html.cinematic .chain-track {
-    height: 100%;
-    width: max-content;
-    flex-direction: row;
+  .chain-media > div {
+    background-image: linear-gradient(to top, #05070c 0%, rgb(5 7 12 / 0.78) 24%, rgb(5 7 12 / 0.18) 46%, transparent 64%);
   }
 
-  html.cinematic .chain-panel {
-    height: 100svh;
-    width: 100vw;
-    min-height: 0;
+  .chain-copy {
+    flex: 0 0 auto;
+    margin-top: -6.5rem;
+    padding-top: 0;
+    padding-bottom: max(1.35rem, env(safe-area-inset-bottom));
   }
 
   html.cinematic .scene-count {
-    display: block;
+    top: max(4.75rem, calc(env(safe-area-inset-top) + 4.25rem));
+    right: 1.25rem;
+    bottom: auto;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 640px) {
+  .chain-media {
+    margin-inline: 2rem;
   }
 }
 
@@ -348,3 +412,6 @@ input:-webkit-autofill {
     animation: none;
   }
 }
+
+
+
