@@ -14,8 +14,14 @@ const rails: Record<string, { accent: string; chapters: Chapter[] }> = {
       { id: "top", label: "Planen" },
       { id: "kedjan", label: "Häftet" },
       { id: "kund", label: "Plus" },
-      { id: "produkter", label: "Produkter" },
       { id: "mer", label: "Mer" },
+      { id: "kontakt", label: "Kontakt" },
+    ],
+  },
+  "/produkter": {
+    accent: "bg-cyan",
+    chapters: [
+      { id: "produkter", label: "Produkterna" },
       { id: "kontakt", label: "Kontakt" },
     ],
   },

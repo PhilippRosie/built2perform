@@ -38,7 +38,7 @@ export function More() {
         </Reveal>
         <Reveal delay={120}>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-mist">
-            Häftet och sportartiklarna är redan med. <span className="text-white">Här finns också tryck och profilering, och ett premiumvarumärke föreningen kan sälja.</span>
+            Häftet är redan med. <span className="text-white">Här finns också tryck och profilering, och ett premiumvarumärke föreningen kan sälja.</span>
           </p>
         </Reveal>
         <Reveal stagger className="mt-16">

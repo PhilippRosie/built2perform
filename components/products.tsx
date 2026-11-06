@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CombinedTotal, ProductCalculator } from "@/components/calculator";
+import { ProductCalculator } from "@/components/calculator";
 import { Reveal } from "@/components/reveal";
 
 const products = [
@@ -46,7 +46,7 @@ export function Products() {
       </div>
       <div className="page-x relative py-24 sm:py-32">
         <Reveal>
-          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Sportartiklar</p>
+          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Built2Perform</p>
           <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
             <span className="line-soft">Och så har vi</span>
             produkterna<span className="text-cyan">.</span>
@@ -100,7 +100,7 @@ export function Products() {
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-5 text-lg leading-8 text-mist">
-              Grepp, skydd och strumpor behövs ändå. <span className="text-white">När laget säljer dem stärks lagkassan med 75 kronor per produkt.</span> Säljer ni häftet också kan ni räkna ihop båda här under.
+              Grepp, skydd och strumpor behövs ändå. <span className="text-white">När laget säljer dem stärks lagkassan med 75 kronor per produkt.</span>
             </p>
           </Reveal>
         </div>
@@ -108,9 +108,6 @@ export function Products() {
 
       <div className="page-x pb-24">
         <ProductCalculator />
-        <div className="mt-6">
-          <CombinedTotal />
-        </div>
       </div>
     </section>
   );

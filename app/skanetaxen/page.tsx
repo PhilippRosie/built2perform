@@ -35,8 +35,8 @@ const beanies = [
 
 const garments = [
   {
-    src: "/media/skanetaxen-jacka-fram.jpg",
-    alt: "Gräddvit jacka framifrån, med dragkedja och Skånetaxen broderat på ärmen.",
+    src: "/media/skanetaxen-jacka-fram-2.jpg",
+    alt: "Gräddvit jacka framifrån, utan sidofickor, med dragkedja och Skånetaxen broderat på ärmen.",
     label: "Jacka",
   },
   {
@@ -45,22 +45,22 @@ const garments = [
     label: "Jacka, rygg",
   },
   {
-    src: "/media/skanetaxen-hoodie-fram.jpg",
-    alt: "Beige hoodie med en liten vit Skånetaxen-tax på huvan och märket broderat på ärmen.",
+    src: "/media/skanetaxen-hoodie-fram-2.jpg",
+    alt: "Beige hoodie utan känguruficka, med en liten vit Skånetaxen-tax på huvan och märket broderat på ärmen.",
     label: "Hoodie",
   },
 ];
 
 const worn = [
   {
-    src: "/media/skanetaxen-hoodie.jpg",
-    alt: "En person i en beige hoodie med Skånetaxen-taxen på huvan, händerna i fickan, höstljus vid en sjö.",
+    src: "/media/skanetaxen-hoodie-3.jpg",
+    alt: "En kvinna i beige hoodie utan känguruficka, med Skånetaxen-taxen på huvan och händerna i framfickorna, i höstljus vid en sjö.",
     label: "Hoodie",
     frame: "aspect-[4/5]",
   },
   {
-    src: "/media/skanetaxen-skogen-2.jpg",
-    alt: "Två personer i höstskog. Hon i gräddvit teddyjacka och mössa med tofs, han i svart mössa, beige hoodie och mörk väst.",
+    src: "/media/skanetaxen-skogen-3.jpg",
+    alt: "Ett par i höstskog. Hon i gräddvit teddyjacka och mössa med tofs, han i svart mössa, beige hoodie och mörk väst.",
     label: "I skogen",
     frame: "aspect-[4/5]",
   },
@@ -214,7 +214,7 @@ export default function SkanetaxenPage() {
 
       <section className="relative mt-3 aspect-[16/9] overflow-hidden bg-black sm:mt-4" aria-label="Skånetaxen vid sjön i kvällsljus">
         <Image
-          src="/media/skanetaxen-sjon-2.jpg"
+          src="/media/skanetaxen-sjon-3.jpg"
           alt="Två personer vid en sjö i kvällsljus. Hon har beige hoodie och mössa med tofs, han en gräddvit jacka med Skånetaxen broderat på ryggen."
           fill
           sizes="100vw"

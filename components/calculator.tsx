@@ -224,7 +224,7 @@ function BookletMembers({ onApply }: { onApply: (count: number) => void }) {
 }
 
 export function ProductCalculator() {
-  const { products, setProducts, bookletTotal } = useEarnings();
+  const { products, setProducts } = useEarnings();
   return (
     <Calculator
       id="kalkyl-produkt"
@@ -238,7 +238,7 @@ export function ProductCalculator() {
       resultLabel="Lagkassan får"
     >
       <p className="mt-6 text-sm text-mist">
-        Tillsammans med häftet: <span className="text-white">{kronor(bookletTotal + products * site.productKronor)}</span>
+        Häftet räknas för sig på <a href="/" className="text-white">Built2Boost</a>.
       </p>
     </Calculator>
   );
