@@ -53,7 +53,7 @@ const garments = [
 
 const worn = [
   {
-    src: "/media/skanetaxen-hoodie-3.jpg",
+    src: "/media/skanetaxen-hoodie-4.jpg",
     alt: "En kvinna i beige hoodie utan känguruficka, med Skånetaxen-taxen på huvan och händerna i framfickorna, i höstljus vid en sjö.",
     label: "Hoodie",
     frame: "aspect-[4/5]",
