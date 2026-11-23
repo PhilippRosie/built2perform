@@ -19,10 +19,13 @@ function LenisDriver() {
       ScrollTrigger.update();
     };
 
+    const onScroll = () => ScrollTrigger.update();
+    window.addEventListener("scroll", onScroll, { passive: true });
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      window.removeEventListener("scroll", onScroll);
       gsap.ticker.remove(tick);
     };
   }, [lenis]);

@@ -55,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="sv" className={`${display.variable} ${sans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full bg-ink font-sans text-paper">
         <Script id="cinematic-flag" strategy="beforeInteractive">
-          {`try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("cinematic")}catch(e){}`}
+          {`try{var m=matchMedia("(prefers-reduced-motion: reduce)");if(!m.matches){document.documentElement.classList.add("cinematic");var p=location.pathname;if(p==="/"||p==="/print"||p==="/produkter"||p==="/skanetaxen")document.documentElement.dataset.homeStage="on"}}catch(e){}`}
         </Script>
         <a className="skip" href="#innehall">
           Hoppa till innehållet

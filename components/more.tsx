@@ -38,13 +38,13 @@ export function More() {
         </Reveal>
         <Reveal delay={120}>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-mist">
-            Häftet och sportartiklarna är redan med. <span className="text-white">Här finns också tryck och profilering, och ett premiumvarumärke föreningen kan sälja.</span>
+            Häftet är redan med. <span className="text-white">Här finns också tryck och profilering, och ett premiumvarumärke föreningen kan sälja.</span>
           </p>
         </Reveal>
         <Reveal stagger className="mt-16">
-        <div className="grid gap-px bg-white/10 lg:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           {marks.map((mark) => (
-            <article key={mark.name} className="bg-ink p-8 sm:p-12">
+            <article key={mark.name} className="p-8 shadow-[0_0_36px_rgba(60,228,244,0.28)] sm:p-10">
               <p className="font-display text-4xl uppercase leading-none text-cyan sm:text-5xl">{mark.name}</p>
               <p className="mt-6 text-[0.72rem] uppercase tracking-[0.32em] text-white/55">{mark.kicker}</p>
               <h3 className="mt-3 font-display text-4xl uppercase leading-[0.9] text-white sm:text-5xl">

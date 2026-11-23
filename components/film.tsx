@@ -73,7 +73,7 @@ export function Film() {
       setCinematic(allowFilm);
 
       ctx = gsap.context(() => {
-        if (allowMotion && hero.current && heroMedia.current && heroCopy.current && window.matchMedia("(min-width: 1024px)").matches) {
+        if (allowMotion && hero.current && heroMedia.current && heroCopy.current && window.matchMedia("(min-width: 1024px)").matches && root.dataset.homeStage !== "on") {
           gsap.fromTo(
             heroMedia.current,
             { yPercent: -4, scale: 1.08 },
@@ -102,7 +102,7 @@ export function Film() {
           });
         }
 
-        if (allowFilm && chain.current && track.current) {
+        if (allowFilm && chain.current && track.current && document.documentElement.dataset.homeStage !== "on") {
           const currentTrack = track.current;
           gsap.to(currentTrack, {
             x: () => -(currentTrack.scrollWidth - window.innerWidth),
@@ -128,13 +128,22 @@ export function Film() {
     };
 
     setup();
+    const onHomeStage = () => setup();
+    const onChain = (event: Event) => {
+      const next = (event as CustomEvent<number>).detail;
+      setIndex((current) => (current === next ? current : next));
+    };
     const onLoad = () => ScrollTrigger.refresh();
     const onResize = () => ScrollTrigger.refresh();
+    window.addEventListener("homestage", onHomeStage);
+    window.addEventListener("chain-index", onChain);
     window.addEventListener("load", onLoad);
     window.addEventListener("resize", onResize);
     motion.addEventListener("change", setup);
 
     return () => {
+      window.removeEventListener("homestage", onHomeStage);
+      window.removeEventListener("chain-index", onChain);
       window.removeEventListener("load", onLoad);
       window.removeEventListener("resize", onResize);
       motion.removeEventListener("change", setup);
@@ -180,23 +189,28 @@ export function Film() {
         </div>
       </section>
 
-      <Ticker text="Häfte · Kupong · Plus · Förening · Lokalt · Aktör · Grepp · Skydd" />
-
-      <section className="page-x bg-ink py-24 sm:py-32">
-        <Reveal>
-          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Kedjan</p>
-          <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
-            Så går
-            <span className="line-soft">häftet</span>
-            till<span className="text-cyan">.</span>
-          </h2>
-        </Reveal>
-        <Reveal delay={120}>
-          <p className="mt-8 max-w-xl text-lg leading-8 text-mist">
-            Vi bygger häftet utifrån föreningens önskemål. Föreningen säljer det. Aktörerna på orten är med.{" "}
-            <span className="text-white">Slutkunden sparar massor med pengar.</span>
-          </p>
-        </Reveal>
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-ink text-center">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.22]">
+          <Ticker cover text="Häfte · Kupong · Plus · Förening · Lokalt · Aktör · Grepp · Skydd" />
+        </div>
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-[78%] w-[min(56rem,92vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(5,7,12,0.82)_0%,rgba(5,7,12,0.45)_46%,transparent_74%)]" />
+        <div className="page-x relative z-10 flex max-w-4xl flex-col items-center">
+          <Reveal>
+            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Kedjan</p>
+            <h2 className="mt-6 font-display text-[clamp(3.4rem,16vw,8.6rem)] font-semibold uppercase leading-[0.82] text-white">
+              <span className="block">Så går</span>
+              <span className="mt-[0.12em] block text-[0.62em] tracking-[0.08em]">
+                <span className="ink-line">häftet</span> till<span className="text-cyan">.</span>
+              </span>
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-mist sm:text-xl">
+              Vi bygger häftet utifrån föreningens önskemål. Föreningen säljer det. Aktörerna på orten är med.{" "}
+              <span className="text-white">Slutkunden sparar massor med pengar.</span>
+            </p>
+          </Reveal>
+        </div>
       </section>
 
       <section id="kedjan" ref={chain} className="chain relative bg-ink" aria-label="Häftet, från föreningen till slutkunden">
@@ -236,20 +250,6 @@ export function Film() {
         ) : null}
       </section>
 
-      <section className="relative aspect-[1024/533] max-h-[78svh] w-full overflow-hidden bg-black" aria-label="Built2Boost, laget framför arenan">
-        <Image
-          src="/media/laget.jpg"
-          alt="Ett lag med ryggen mot oss, i motljus på planen."
-          fill
-          sizes="100vw"
-          className="object-cover object-[center_68%]"
-        />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-ink to-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent" />
-        <p className="page-x absolute inset-x-0 bottom-3 text-center font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white sm:bottom-4 sm:text-left">
-          Tillsammans är vi <span className="text-cyan">starkare.</span>
-        </p>
-      </section>
     </>
   );
 }

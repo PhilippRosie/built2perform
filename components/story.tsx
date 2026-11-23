@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLayoutEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useState } from "react";
 import { KineticLines } from "@/components/kinetic";
 import { Reveal } from "@/components/reveal";
 import { Ticker } from "@/components/ticker";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export type Scene = {
   index: string;
@@ -38,9 +34,6 @@ type StoryProps = {
   heroFrame?: string;
   heroStill?: boolean;
   scenes: Scene[];
-  closeImage: string;
-  closeAlt: string;
-  closeLine: string;
 };
 
 export function Story({
@@ -56,105 +49,38 @@ export function Story({
   heroAlt,
   heroPosition = "object-center",
   heroFrame = "inset-x-0 -top-[8%] h-[120%]",
-  heroStill = false,
   scenes,
-  closeImage,
-  closeAlt,
-  closeLine,
 }: StoryProps) {
-  const hero = useRef<HTMLElement>(null);
-  const heroMedia = useRef<HTMLDivElement>(null);
-  const heroCopy = useRef<HTMLDivElement>(null);
-  const chain = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [cinematic, setCinematic] = useState(false);
   const count = scenes.length;
 
-  useLayoutEffect(() => {
-    const root = document.documentElement;
+  useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let ctx: gsap.Context | null = null;
-
-    const setup = () => {
-      ctx?.revert();
-      ctx = null;
-      const allowMotion = !motion.matches;
-      const allowFilm = allowMotion;
-      root.classList.toggle("cinematic", allowFilm);
-      setCinematic(allowFilm);
-
-      ctx = gsap.context(() => {
-        if (allowMotion && hero.current && heroMedia.current && heroCopy.current) {
-          gsap.fromTo(
-            heroMedia.current,
-            heroStill ? { yPercent: 0, scale: 1 } : { yPercent: -4, scale: 1.08 },
-            {
-              yPercent: heroStill ? 4 : 12,
-              scale: heroStill ? 1.03 : 1.16,
-              ease: "none",
-              scrollTrigger: { trigger: hero.current, start: "top top", end: "bottom top", scrub: true },
-            },
-          );
-          gsap.to(heroCopy.current, {
-            y: -48,
-            opacity: 0.2,
-            ease: "none",
-            scrollTrigger: { trigger: hero.current, start: "center top", end: "bottom top", scrub: true },
-          });
-        }
-
-        if (allowFilm && chain.current && track.current) {
-          const currentTrack = track.current;
-          gsap.to(currentTrack, {
-            x: () => -(currentTrack.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-              trigger: chain.current,
-              start: "top top",
-              end: () => `+=${Math.max(0, currentTrack.scrollWidth - window.innerWidth)}`,
-              pin: true,
-              scrub: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-              onUpdate: (self) => {
-                const next = Math.min(count - 1, Math.round(self.progress * (count - 1)));
-                setIndex((current) => (current === next ? current : next));
-              },
-            },
-          });
-        }
-      });
-
-      ScrollTrigger.refresh();
+    const apply = () => setCinematic(!motion.matches);
+    apply();
+    const onChain = (event: Event) => {
+      const next = (event as CustomEvent<number>).detail;
+      if (typeof next === "number") setIndex(next);
     };
-
-    setup();
-    const onLoad = () => ScrollTrigger.refresh();
-    const onResize = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
-    window.addEventListener("resize", onResize);
-    motion.addEventListener("change", setup);
-
+    motion.addEventListener("change", apply);
+    window.addEventListener("chain-index", onChain);
     return () => {
-      window.removeEventListener("load", onLoad);
-      window.removeEventListener("resize", onResize);
-      motion.removeEventListener("change", setup);
-      ctx?.revert();
-      root.classList.remove("cinematic");
+      motion.removeEventListener("change", apply);
+      window.removeEventListener("chain-index", onChain);
     };
-  }, [count]);
+  }, []);
 
   const total = String(count).padStart(2, "0");
 
   return (
     <>
-      <section id="top" ref={hero} className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
-        <div ref={heroMedia} className={`absolute ${heroFrame}`}>
+      <section id="top" className="relative min-h-[100svh] overflow-hidden bg-ink lg:h-[100svh]">
+        <div className={`hero-media absolute ${heroFrame}`}>
           <Image src={heroImage} alt={heroAlt} fill priority sizes="100vw" className={`object-cover ${heroPosition}`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(190,236,255,0.22),transparent_42%),linear-gradient(to_bottom,rgba(5,7,12,0.45)_0%,rgba(5,7,12,0.18)_30%,rgba(5,7,12,0.78)_68%,#05070c_100%)]" />
         </div>
-        <div ref={heroCopy} className="page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 lg:pb-16 lg:pt-24">
+        <div className="hero-copy page-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-28 pt-24 lg:pb-16 lg:pt-24">
           <p className="hero-kicker rise text-[0.72rem] uppercase tracking-[0.46em] text-cyan">{kicker}</p>
           <h1 className="hero-title rise rise-2 mt-3 max-w-5xl font-display font-semibold uppercase leading-[0.84] text-white">
             <KineticLines text={title} />
@@ -174,23 +100,27 @@ export function Story({
         </div>
       </section>
 
-      <Ticker text={marquee} />
-
-      <section id="inledning" className="page-x scroll-mt-28 bg-ink py-24 sm:py-32">
-        <Reveal>
-          <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">{introKicker}</p>
-          <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-[0.86] text-white">
-            <KineticLines text={introTitle} />
-          </h2>
-        </Reveal>
-        <Reveal delay={120}>
-          <p className="mt-8 max-w-xl text-lg leading-8 text-mist">{introBody}</p>
-        </Reveal>
+      <section id="inledning" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-ink text-center">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.22]">
+          <Ticker cover text={marquee} />
+        </div>
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-[78%] w-[min(56rem,92vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(5,7,12,0.82)_0%,rgba(5,7,12,0.45)_46%,transparent_74%)]" />
+        <div className="page-x relative z-10 flex max-w-4xl flex-col items-center">
+          <Reveal>
+            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">{introKicker}</p>
+            <h2 className="mt-6 font-display text-[clamp(3.4rem,16vw,8.6rem)] font-semibold uppercase leading-[0.82] text-white">
+              <KineticLines text={introTitle} />
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-mist sm:text-xl">{introBody}</p>
+          </Reveal>
+        </div>
       </section>
 
-      <section id="kedjan" ref={chain} className="chain relative bg-ink" aria-label={chainLabel}>
+      <section id="kedjan" className="chain relative bg-ink" aria-label={chainLabel}>
         <div className="chain-viewport">
-          <div ref={track} className="chain-track flex flex-col">
+          <div className="chain-track flex flex-col">
             {scenes.map((scene) =>
               scene.image ? (
                 <article key={scene.index} className="chain-panel relative flex min-h-[100svh] w-full flex-col bg-ink lg:min-h-[92svh] lg:flex-row">
@@ -205,6 +135,9 @@ export function Story({
                       <KineticLines text={scene.title} />
                     </h3>
                     <p className="mt-5 max-w-md text-base leading-7 text-mist">{scene.body}</p>
+                    <p className="mt-8 font-display text-xl tracking-[0.18em] text-white/70 lg:hidden">
+                      {scene.index} / {total}
+                    </p>
                     {scene.href && scene.link ? (
                       <Link href={scene.href} className="mt-8 inline-flex font-display text-2xl uppercase tracking-[0.12em] text-cyan">
                         {scene.link}
@@ -233,20 +166,12 @@ export function Story({
           </div>
         </div>
         {cinematic ? (
-          <p className="scene-count pointer-events-none absolute right-8 z-20 font-display text-2xl tracking-[0.18em] text-white/80">
+          <p className="scene-count pointer-events-none absolute right-8 z-20 hidden font-display text-2xl tracking-[0.18em] text-white/80 lg:block">
             {String(index + 1).padStart(2, "0")} / {total}
           </p>
         ) : null}
       </section>
 
-      <section className="relative h-[78svh] overflow-hidden bg-black">
-        <Image src={closeImage} alt={closeAlt} fill sizes="100vw" className="object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/30" />
-        <p className="page-x absolute inset-x-0 bottom-10 font-display text-[clamp(2rem,8vw,3.75rem)] uppercase leading-none text-white">
-          {closeLine.replace(/[.]$/, "")}
-          <span className="text-cyan">.</span>
-        </p>
-      </section>
     </>
   );
 }
