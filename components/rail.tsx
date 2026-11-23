@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { scrollHomeChapter } from "@/components/home-stage";
 import { useLenis } from "lenis/react";
 
 type Chapter = { id: string; label: string };
@@ -21,7 +22,12 @@ const rails: Record<string, { accent: string; chapters: Chapter[] }> = {
   "/produkter": {
     accent: "bg-cyan",
     chapters: [
-      { id: "produkter", label: "Produkterna" },
+      { id: "top", label: "Laget" },
+      { id: "inledning", label: "Produkterna" },
+      { id: "grepp", label: "Grepp" },
+      { id: "strumpor", label: "Strumpor" },
+      { id: "lagkassan", label: "Lagkassan" },
+      { id: "kalkyl", label: "Räkna" },
       { id: "kontakt", label: "Kontakt" },
     ],
   },
@@ -70,6 +76,7 @@ export function Rail() {
 
   const update = useCallback(() => {
     if (!chapters.length) return;
+    if (document.documentElement.dataset.homeStage === "on") return;
     const next = currentChapter(chapters);
     setActive((prev) => (prev === next ? prev : next));
   }, [chapters]);
@@ -79,9 +86,16 @@ export function Rail() {
   useEffect(() => {
     setActive(chapters[0]?.id ?? "");
     update();
+    const onChapter = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      if (!id) return;
+      setActive((prev) => (prev === id ? prev : id));
+    };
+    window.addEventListener("homestage-chapter", onChapter);
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
+      window.removeEventListener("homestage-chapter", onChapter);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
@@ -89,8 +103,10 @@ export function Rail() {
 
   function go(event: React.MouseEvent<HTMLAnchorElement>, id: string) {
     const target = document.getElementById(id);
-    if (!target) return;
+    if (!target && document.documentElement.dataset.homeStage !== "on") return;
     event.preventDefault();
+    if (scrollHomeChapter(id)) return;
+    if (!target) return;
     if (lenis) lenis.scrollTo(target, { offset: 0 });
     else target.scrollIntoView();
   }

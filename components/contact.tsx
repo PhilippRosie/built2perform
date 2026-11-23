@@ -1,7 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal } from "@/components/reveal";
 
 function kineticHeading(heading: ReactNode, markClass: string) {
   if (typeof heading !== "string") return heading;
@@ -38,9 +37,11 @@ type ContactProps = {
 
 const defaultHeading = (
   <>
-    Vilka bygger
-    <span className="line-soft">vi med</span>
-    härnäst<span className="text-cyan">?</span>
+    <span className="contact-line block">Vilka bygger</span>
+    <span className="contact-line line-soft">vi med</span>
+    <span className="contact-line block">
+      härnäst<span className="text-cyan">?</span>
+    </span>
   </>
 );
 
@@ -65,14 +66,14 @@ export function Contact({
       />
       <div className={`absolute inset-0 ${sand ? "bg-gradient-to-b from-ink via-ink/90 to-ink" : "bg-gradient-to-b from-ink via-ink/88 to-ink"}`} />
       <div className="page-x relative grid gap-14 lg:grid-cols-12">
-        <Reveal className="lg:col-span-5">
-          <p className={`text-[0.72rem] uppercase tracking-[0.42em] ${mark}`}>Kontakt</p>
-          <h2 className="mt-4 font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
+        <div className="contact-beat lg:col-span-5">
+          <p className={`contact-line text-[0.72rem] uppercase tracking-[0.42em] ${mark}`}>Kontakt</p>
+          <h2 className={`mt-4 font-display text-[clamp(2.6rem,12vw,4.25rem)] font-semibold uppercase leading-none text-white ${typeof heading === "string" ? "contact-line" : ""}`}>
             {kineticHeading(heading, mark)}
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-8 text-mist">{lead}</p>
-        </Reveal>
-        <div className="lg:col-span-7">
+          <p className="contact-line mt-5 max-w-md text-base leading-7 text-mist sm:mt-6 sm:text-lg sm:leading-8">{lead}</p>
+        </div>
+        <div className="contact-form-wrap lg:col-span-7">
           <ContactForm allowed={allowed} subject={subject} hints={hints} tone={tone} />
         </div>
       </div>

@@ -43,23 +43,25 @@ export function Calculator({
   }
 
   return (
-    <div id={id} className="scroll-mt-24 border border-white/10 bg-[#070d14]">
-      <div className="grid gap-10 p-6 md:grid-cols-12 md:p-12">
-        <div className="md:col-span-5">
-          <p className="text-[0.72rem] uppercase tracking-[0.38em] text-cyan">{kicker}</p>
-          <p className="mt-3 font-display text-[clamp(5.5rem,12vw,9rem)] font-semibold leading-[0.8] text-cyan">{rate}</p>
-          <p className="font-display text-3xl uppercase leading-none tracking-wide text-white sm:text-4xl">{rateLabel}</p>
-          <p className="mt-5 max-w-sm text-sm leading-6 text-mist">{note}</p>
+    <div id={id} className="scroll-mt-24 grid gap-8 border border-white/10 bg-[#070d14] p-6 lg:grid-cols-12 lg:gap-10 lg:p-12">
+      <div className="calc-beat lg:contents">
+        <div className="lg:col-span-5">
+          <p className="calc-line text-[0.72rem] uppercase tracking-[0.38em] text-cyan">{kicker}</p>
+          <p className="calc-line mt-3 font-display text-[clamp(4.5rem,22vw,9rem)] font-semibold leading-[0.8] text-cyan">{rate}</p>
+          <p className="calc-line font-display text-2xl uppercase leading-none tracking-wide text-white sm:text-4xl">{rateLabel}</p>
+          <p className="calc-line mt-5 max-w-sm text-sm leading-6 text-mist">{note}</p>
         </div>
-        <div className="flex flex-col justify-end md:col-span-7">
-          <div className="flex items-end justify-between gap-4">
+      </div>
+      <div className="calc-beat lg:contents">
+        <div className="flex flex-col justify-end lg:col-span-7">
+          <div className="calc-part flex items-end justify-between gap-4">
             <label htmlFor={`${id}-antal`} className="text-[0.72rem] uppercase tracking-[0.28em] text-mist">
               Antal {noun[1]}
             </label>
             <input
               id={`${id}-antal`}
               inputMode="numeric"
-              className="w-36 border-b border-white/25 bg-transparent py-1 text-right font-display text-4xl text-white outline-none focus:border-cyan"
+              className="w-28 border-b border-white/25 bg-transparent py-1 text-right font-display text-3xl text-white outline-none focus:border-cyan sm:w-36 sm:text-4xl"
               value={focused ? text : String(value)}
               onFocus={() => {
                 setFocused(true);
@@ -79,7 +81,7 @@ export function Calculator({
             />
           </div>
           <input
-            className="range mt-6"
+            className="calc-part range mt-4 lg:mt-6"
             type="range"
             min={0}
             max={MAX}
@@ -88,13 +90,13 @@ export function Calculator({
             value={value}
             onChange={(event) => commit(Number(event.target.value))}
           />
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-2 lg:mt-4">
             {[25, 50, 100, 250, 500, 1000].map((preset) => (
               <button
                 key={preset}
                 type="button"
                 onClick={() => commit(preset)}
-                className={`border px-3 py-2 font-display text-lg uppercase tracking-[0.08em] transition ${
+                className={`calc-chip border px-3 py-2 font-display text-base uppercase tracking-[0.08em] transition lg:text-lg ${
                   value === preset ? "border-cyan bg-cyan text-ink" : "border-white/15 text-white hover:border-cyan"
                 }`}
               >
@@ -102,13 +104,15 @@ export function Calculator({
               </button>
             ))}
           </div>
-          <p className="mt-10 text-[0.72rem] uppercase tracking-[0.32em] text-mist">{resultLabel}</p>
-          <p className="mt-2 font-display text-[clamp(2.6rem,12vw,4.5rem)] leading-none text-white" aria-live="polite">
-            {kronor(value * rate)}
-          </p>
-          <p className="mt-3 text-sm text-mist">
-            {value} {plural(value, noun[0], noun[1])} × {kronor(rate)}
-          </p>
+          <div className="calc-part mt-4 lg:mt-10">
+            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-mist">{resultLabel}</p>
+            <p className="mt-1 font-display text-[clamp(2rem,9vw,4.5rem)] leading-none text-white lg:mt-2" aria-live="polite">
+              {kronor(value * rate)}
+            </p>
+            <p className="mt-1 text-sm text-mist lg:mt-3">
+              {value} {plural(value, noun[0], noun[1])} × {kronor(rate)}
+            </p>
+          </div>
           {children}
         </div>
       </div>
@@ -146,12 +150,12 @@ function BookletMembers({ onApply }: { onApply: (count: number) => void }) {
   }
 
   return (
-    <div className="mt-8 border-t border-white/10 pt-6">
-      <p className="text-[0.72rem] uppercase tracking-[0.28em] text-cyan">Köp 1, sälj 1</p>
-      <p className="mt-3 max-w-xl text-sm leading-6 text-mist">
+    <div className="mt-4 border-t border-white/10 pt-4 lg:mt-8 lg:pt-6">
+      <p className="calc-chip text-[0.72rem] uppercase tracking-[0.28em] text-cyan">Köp 1, sälj 1</p>
+      <p className="calc-chip mt-2 max-w-xl text-sm leading-5 text-mist lg:mt-3 lg:leading-6">
         Varje medlem köper ett häfte och säljer ett. Det blir två häften per medlem och utgåva. Siffran går att ändra.
       </p>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto_auto] lg:items-end">
+      <div className="calc-chip mt-3 grid grid-cols-2 gap-x-4 gap-y-3 lg:mt-4 lg:grid-cols-[1fr_1fr_auto_auto] lg:items-end">
         <label className="block text-sm text-mist">
           Medlemmar
           <input
@@ -210,12 +214,12 @@ function BookletMembers({ onApply }: { onApply: (count: number) => void }) {
         <button
           type="button"
           onClick={() => apply(members, each, editions)}
-          className="border border-cyan px-4 py-3 font-display text-xl uppercase tracking-[0.1em] text-cyan transition hover:bg-cyan hover:text-ink"
+          className="col-span-2 border border-cyan px-4 py-3 font-display text-xl uppercase tracking-[0.1em] text-cyan transition hover:bg-cyan hover:text-ink lg:col-span-1"
         >
           Använd
         </button>
       </div>
-      <p className="mt-4 text-sm text-mist" aria-live="polite">
+      <p className="calc-chip mt-4 text-sm text-mist" aria-live="polite">
         {members} {plural(members, "medlem", "medlemmar")} × {each} {plural(each, "häfte", "häften")} × {editions}{" "}
         {plural(editions, "utgåva", "utgåvor")} = {booklets} {plural(booklets, "häfte", "häften")}. {kronor(booklets * site.bookletKronor)} på ett år.
       </p>

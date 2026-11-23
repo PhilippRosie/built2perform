@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
+import { scrollHomeChapter } from "@/components/home-stage";
 import { Logo } from "@/components/logo";
 
 type NavLink = { href: string; label: string; id?: string };
@@ -236,6 +237,7 @@ export function Nav() {
     if (!target) return;
     event.preventDefault();
     lenis?.start();
+    if (scrollHomeChapter(id)) return;
     if (lenis) lenis.scrollTo(target, { offset: 0 });
     else target.scrollIntoView();
   }
@@ -244,6 +246,7 @@ export function Nav() {
     setOpen(false);
     if (!onHome) return;
     event.preventDefault();
+    if (scrollHomeChapter("top")) return;
     const target = document.getElementById("top");
     if (target && lenis) lenis.scrollTo(target, { offset: 0 });
     else window.scrollTo(0, 0);

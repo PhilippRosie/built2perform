@@ -112,6 +112,12 @@ body::after {
   animation: drift 60s linear infinite;
 }
 
+@media (max-width: 1023px) {
+  .stroke-run {
+    top: 4.85rem;
+  }
+}
+
 
 .stroke-text {
   color: transparent;
@@ -141,6 +147,32 @@ body::after {
 
 .marquee-track {
   animation: marquee 24s linear infinite;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+.ticker-cover {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.08em;
+  overflow: hidden;
+  background: #05070c;
+}
+
+.ticker-cover-line {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-size: clamp(2.8rem, 10.5vh, 7.4rem);
+  font-weight: 600;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 @keyframes marquee {
@@ -249,6 +281,165 @@ html.cinematic .chain-panel {
 html.cinematic .scene-count {
   display: block;
   bottom: 1.5rem;
+}
+
+html[data-home-stage="on"] .home-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #05070c;
+  transform: none !important;
+}
+
+html[data-home-stage="on"] .reveal,
+html[data-home-stage="on"] .stagger li,
+html[data-home-stage="on"] .stagger article {
+  animation: none !important;
+}
+
+html[data-home-stage="on"] #hafte,
+html[data-home-stage="on"] #aktorer,
+html[data-home-stage="on"] #mer,
+html[data-home-stage="on"] #kontakt,
+html[data-home-stage="on"] #kund {
+  padding-top: 5.25rem;
+  padding-bottom: 1.75rem;
+}
+
+html[data-home-stage="on"] #hafte {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+html[data-home-stage="on"] #kund {
+  margin-top: 0;
+}
+
+html[data-home-stage="on"] #aktorer .page-x {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 1.25rem;
+}
+
+html[data-home-stage="on"] #aktorer .page-x > * {
+  grid-column: auto;
+  min-height: 0;
+}
+
+html[data-home-stage="on"] #aktorer .actor-media {
+  min-height: 0;
+  height: min(62vh, 520px);
+  aspect-ratio: auto;
+}
+
+html[data-home-stage="on"] #aktorer h2 {
+  font-size: clamp(2.1rem, 4.2vw, 3.6rem);
+}
+
+html[data-home-stage="on"] #aktorer li {
+  padding: 0.7rem 0.85rem;
+}
+
+html[data-home-stage="on"] #kontakt form,
+html[data-home-stage="on"] #kontakt form .grid {
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  html[data-home-stage="on"] #kontakt textarea {
+    min-height: 4.25rem;
+    max-height: 5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  html[data-home-stage="on"] #kontakt h2 {
+    margin-top: 0.3rem;
+    font-size: 1.7rem;
+  }
+
+  html[data-home-stage="on"] #kontakt h2 .line-soft {
+    display: inline;
+    margin: 0 0.28em 0 0;
+    font-size: 0.58em;
+  }
+
+  html[data-home-stage="on"] #kontakt h2 .line-soft + .contact-line {
+    display: inline;
+  }
+
+  html[data-home-stage="on"] #kontakt .contact-beat > p.contact-line:last-child {
+    margin-top: 0.35rem;
+    max-width: none;
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  html[data-home-stage="on"] #kontakt form {
+    gap: 0.4rem;
+  }
+
+  html[data-home-stage="on"] #kontakt fieldset > div {
+    margin-top: 0.28rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  html[data-home-stage="on"] #kontakt fieldset label {
+    padding: 0.4rem 0.55rem;
+  }
+
+  html[data-home-stage="on"] #kontakt fieldset label .font-display {
+    font-size: 0.95rem;
+  }
+
+  html[data-home-stage="on"] #kontakt fieldset label .text-sm {
+    margin-top: 0.1rem;
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+
+  html[data-home-stage="on"] #kontakt .contact-beat.grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.28rem 0.7rem;
+  }
+
+  html[data-home-stage="on"] #kontakt form label > span {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  html[data-home-stage="on"] #kontakt form input,
+  html[data-home-stage="on"] #kontakt form textarea {
+    margin-top: 0.05rem;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+    font-size: 0.95rem;
+  }
+
+  html[data-home-stage="on"] #kontakt textarea {
+    min-height: 2.35rem;
+    max-height: 2.8rem;
+  }
+
+  html[data-home-stage="on"] #kontakt button[type="submit"] {
+    padding: 0.35rem 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  html[data-home-stage="on"] #kontakt form .contact-chip.flex {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.55rem;
+  }
+}
+
+html[data-home-stage="on"] .chain-copy {
+  padding-bottom: 4.75rem;
 }
 
 /* Mobile chain slides: inset photo, number and title over the lower edge. */

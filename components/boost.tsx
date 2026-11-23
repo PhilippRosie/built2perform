@@ -47,12 +47,24 @@ const actors = [
 
 export function Boost() {
   return (
+    <>
     <section id="hafte" className="relative overflow-hidden bg-ink py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Image
+          src="/media/laget.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_62%]"
+        />
+        <div className="absolute inset-0 bg-ink/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/55 to-ink/85" />
+      </div>
       <div className="stroke-run" aria-hidden="true">
         <p className="stroke-text font-display text-[22vw] font-semibold uppercase leading-none">Boost</p>
         <p className="stroke-text font-display text-[22vw] font-semibold uppercase leading-none">Boost</p>
       </div>
-      <div className="page-x relative">
+      <div className="page-x relative z-10">
         <div className="grid gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-6">
             <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Built2Boost</p>
@@ -71,9 +83,9 @@ export function Boost() {
         </div>
 
         <Reveal stagger className="mt-16">
-          <ol className="grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((step) => (
-              <li key={step.n} className="bg-ink p-6">
+              <li key={step.n} className="bg-ink/75 p-6 shadow-[0_0_36px_rgba(60,228,244,0.28)]">
                 <span className="font-display text-4xl text-cyan">{step.n}</span>
                 <h3 className="mt-4 font-display text-3xl uppercase leading-none text-white">{step.title}</h3>
                 <p className="mt-4 text-sm leading-6 text-mist">{step.body}</p>
@@ -81,9 +93,12 @@ export function Boost() {
             ))}
           </ol>
         </Reveal>
+      </div>
+    </section>
 
-        <div id="aktorer" className="scroll-mt-28 mt-28 grid items-center gap-10 lg:grid-cols-12 lg:gap-0">
-          <div className="relative aspect-[16/10] lg:col-span-7 lg:aspect-auto lg:min-h-[520px]">
+    <section id="aktorer" className="scroll-mt-28 bg-ink py-24 sm:py-32">
+      <div className="page-x grid items-center gap-10 lg:grid-cols-12 lg:gap-0">
+          <div className="actor-media relative aspect-[16/10] lg:col-span-7 lg:aspect-auto lg:min-h-[520px]">
             <Image
               src="/media/aktor-cafe.jpg"
               alt="En barista räcker över en kaffe på ett café, den sortens lokala aktör som finns i häftet."
@@ -123,14 +138,20 @@ export function Boost() {
               Vi tar med aktörer som finns där medlemmarna redan rör sig. Häftet ska gynna handeln runt föreningen.
             </p>
           </div>
-        </div>
-
-        <Savings />
-
-        <div className="mt-16">
-          <BookletCalculator />
-        </div>
       </div>
     </section>
+
+    <section className="bg-ink py-24 sm:py-32">
+      <div className="page-x">
+        <Savings />
+      </div>
+    </section>
+
+    <section className="bg-ink py-24 sm:py-32">
+      <div className="page-x">
+        <BookletCalculator />
+      </div>
+    </section>
+    </>
   );
 }

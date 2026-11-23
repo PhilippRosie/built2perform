@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Contact } from "@/components/contact";
 import { EarningsProvider } from "@/components/earnings";
+import { HomeStage } from "@/components/home-stage";
 import { Products } from "@/components/products";
+import { Team } from "@/components/team";
 
 export const metadata: Metadata = {
   title: "Built2Perform – Produkter",
@@ -11,13 +12,10 @@ export const metadata: Metadata = {
 export default function ProdukterPage() {
   return (
     <EarningsProvider>
+      <HomeStage>
       <Products />
-      <Contact
-        allowed={["forening"]}
-        subject="Built2Perform produkter"
-        lead="Förening som vill sälja produkterna och stärka lagkassan. Skriv. Vi svarar."
-        hints={{ forening: "Vi vill sälja produkterna." }}
-      />
+      <Team />
+      </HomeStage>
     </EarningsProvider>
   );
 }

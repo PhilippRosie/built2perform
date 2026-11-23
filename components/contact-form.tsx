@@ -110,13 +110,14 @@ export function ContactForm({ allowed, subject = "Built2Perform", hints, tone = 
   return (
     <form onSubmit={submit} noValidate className="grid gap-6">
       {choices.length > 1 ? (
+      <div className="contact-beat">
       <fieldset>
-        <legend className="text-[0.72rem] uppercase tracking-[0.28em] text-mist">Jag är</legend>
-        <div className={`mt-3 grid gap-2 ${choices.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+        <legend className="contact-chip text-[0.72rem] uppercase tracking-[0.28em] text-mist">Jag är</legend>
+        <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
           {choices.map((item) => (
             <label
               key={item.id}
-              className={`cursor-pointer border p-4 transition ${role === item.id ? paint.selected : "border-white/15 hover:border-white/40"}`}
+              className={`contact-chip cursor-pointer border p-4 transition ${role === item.id ? paint.selected : "border-white/15 hover:border-white/40"}`}
             >
               <input
                 type="radio"
@@ -135,48 +136,57 @@ export function ContactForm({ allowed, subject = "Built2Perform", hints, tone = 
           ))}
         </div>
       </fieldset>
+      </div>
       ) : null}
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Namn" value={fields.name} error={errors.name} onChange={(value) => set("name", value)} autoComplete="name" paint={paint} />
-        <Field label="E-post" value={fields.email} error={errors.email} onChange={(value) => set("email", value)} type="email" autoComplete="email" paint={paint} />
-        <Field label="Telefon" value={fields.phone} onChange={(value) => set("phone", value)} type="tel" autoComplete="tel" optional paint={paint} />
-        <Field label="Ort" value={fields.city} onChange={(value) => set("city", value)} autoComplete="address-level2" optional paint={paint} />
+      <div className="contact-beat grid gap-4 lg:grid-cols-2 lg:gap-6">
+        <div className="contact-chip"><Field label="Namn" value={fields.name} error={errors.name} onChange={(value) => set("name", value)} autoComplete="name" paint={paint} /></div>
+        <div className="contact-chip"><Field label="E-post" value={fields.email} error={errors.email} onChange={(value) => set("email", value)} type="email" autoComplete="email" paint={paint} /></div>
+        <div className="contact-chip"><Field label="Telefon" value={fields.phone} onChange={(value) => set("phone", value)} type="tel" autoComplete="tel" optional paint={paint} /></div>
+        <div className="contact-chip"><Field label="Ort" value={fields.city} onChange={(value) => set("city", value)} autoComplete="address-level2" optional paint={paint} /></div>
+      </div>
+
+      <div className="contact-beat grid gap-4 lg:grid-cols-2 lg:gap-6">
         {role !== "kund" ? (
-          <Field label={orgLabel} value={fields.organization} error={errors.organization} onChange={(value) => set("organization", value)} paint={paint} />
+          <div className="contact-chip">
+            <Field label={orgLabel} value={fields.organization} error={errors.organization} onChange={(value) => set("organization", value)} paint={paint} />
+          </div>
         ) : (
-          <Field label="Förening" value={fields.organization} onChange={(value) => set("organization", value)} optional paint={paint} />
+          <div className="contact-chip">
+            <Field label="Förening" value={fields.organization} onChange={(value) => set("organization", value)} optional paint={paint} />
+          </div>
         )}
         {role === "forening" ? (
-          <Field label="Ungefär antal medlemmar" value={fields.members} onChange={(value) => set("members", value)} inputMode="numeric" optional paint={paint} />
+          <div className="contact-chip">
+            <Field label="Antal medlemmar" value={fields.members} onChange={(value) => set("members", value)} inputMode="numeric" optional paint={paint} />
+          </div>
+        ) : null}
+        <label className="contact-chip col-span-2 block">
+          <span className="text-[0.72rem] uppercase tracking-[0.28em] text-mist">Meddelande</span>
+          <textarea
+            value={fields.message}
+            onChange={(event) => set("message", event.target.value)}
+            rows={4}
+            aria-invalid={errors.message ? true : undefined}
+            className={`mt-2 w-full resize-none border-b border-white/20 bg-transparent py-3 text-base text-white outline-none ${paint.focus}`}
+          />
+          {errors.message ? <span className={`mt-2 block text-sm ${paint.text}`}>{errors.message}</span> : null}
+        </label>
+
+        <div className="contact-chip col-span-2 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <button type="submit" className={`${paint.button} w-fit px-6 py-3 font-display text-2xl uppercase tracking-[0.12em] text-ink transition`}>
+            Skriv till oss
+          </button>
+          <a href={`mailto:${site.email}`} className="text-sm text-mist underline decoration-white/20 underline-offset-4 hover:text-white">
+            eller mejla {site.email}
+          </a>
+        </div>
+        {sent ? (
+          <p className="col-span-2 text-sm leading-6 text-mist" role="status">
+            Mejlprogrammet ska ha öppnats med ditt meddelande. Om inget hände, skriv direkt till {site.email}. Vi läser det som kommer fram.
+          </p>
         ) : null}
       </div>
-
-      <label className="block">
-        <span className="text-[0.72rem] uppercase tracking-[0.28em] text-mist">Meddelande</span>
-        <textarea
-          value={fields.message}
-          onChange={(event) => set("message", event.target.value)}
-          rows={5}
-          aria-invalid={errors.message ? true : undefined}
-          className={`mt-2 w-full resize-y border-b border-white/20 bg-transparent py-3 text-base text-white outline-none ${paint.focus}`}
-        />
-        {errors.message ? <span className={`mt-2 block text-sm ${paint.text}`}>{errors.message}</span> : null}
-      </label>
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <button type="submit" className={`${paint.button} px-6 py-3 font-display text-2xl uppercase tracking-[0.12em] text-ink transition`}>
-          Skriv till oss
-        </button>
-        <a href={`mailto:${site.email}`} className="text-sm text-mist underline decoration-white/20 underline-offset-4 hover:text-white">
-          eller mejla {site.email}
-        </a>
-      </div>
-      {sent ? (
-        <p className="text-sm leading-6 text-mist" role="status">
-          Mejlprogrammet ska ha öppnats med ditt meddelande. Om inget hände, skriv direkt till {site.email}. Vi läser det som kommer fram.
-        </p>
-      ) : null}
     </form>
   );
 }

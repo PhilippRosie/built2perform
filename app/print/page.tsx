@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { Contact } from "@/components/contact";
+import Image from "next/image";
+import { HomeStage } from "@/components/home-stage";
+import { Team } from "@/components/team";
 import { Reveal } from "@/components/reveal";
 import { Story } from "@/components/story";
 
@@ -17,7 +19,7 @@ const range = [
 
 export default function PrintPage() {
   return (
-    <>
+    <HomeStage>
       <Story
         kicker="Built2Print"
         title={"Namnet\nsyns."}
@@ -70,15 +72,23 @@ export default function PrintPage() {
             position: "object-[center_30%]",
           },
         ]}
-        closeImage="/media/print-press.jpg"
-        closeAlt="En storformatsskrivare trycker en banderoll med Built2Print-märket i en verkstad."
-        closeLine="Tryckt för föreningen."
       />
 
-      <section id="sortiment" className="scroll-mt-28 bg-ink py-24 sm:py-32">
-        <div className="page-x">
+      <section id="sortiment" className="relative scroll-mt-28 overflow-hidden bg-ink py-24 sm:py-32">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <Image
+            src="/media/print-press.jpg"
+            alt="En storformatsskrivare trycker en banderoll med Built2Print-märket i en verkstad."
+            fill
+            sizes="100vw"
+            className="object-cover object-[center_42%]"
+          />
+          <div className="absolute inset-0 bg-ink/45" />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/55 to-ink/80" />
+        </div>
+        <div className="page-x relative">
           <Reveal>
-            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">För föreningen</p>
+            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-cyan">Tryckt för föreningen</p>
             <h2 className="mt-4 max-w-4xl font-display text-[clamp(2.25rem,4.6vw,4.25rem)] font-semibold uppercase leading-none text-white">
               Fyra saker
               <span className="line-soft">med</span>
@@ -86,7 +96,7 @@ export default function PrintPage() {
             </h2>
           </Reveal>
           <Reveal stagger className="mt-14">
-            <ol className="grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="stage-cards grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
               {range.map((item, index) => (
                 <li key={item.title} className="bg-ink p-6 sm:p-8">
                   <span className="font-display text-4xl text-cyan">{String(index + 1).padStart(2, "0")}</span>
@@ -104,16 +114,7 @@ export default function PrintPage() {
         </div>
       </section>
 
-      <Contact
-        heading="Vill ni synas?"
-        lead="Skriv vad ni vill ha föreningens namn på. Kläder, skylt, beachflag eller rollup. Vi svarar."
-        allowed={["forening", "aktor"]}
-        subject="Built2Print"
-        hints={{
-          forening: "Vi vill profilera föreningen.",
-          aktor: "Vi vill beställa tryck.",
-        }}
-      />
-    </>
+      <Team />
+    </HomeStage>
   );
 }
